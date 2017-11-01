@@ -76,13 +76,20 @@ public class AsyncLoadAccomplishedChallenge {
                 JSONObject dados = photoJSON.getJSONObject(i);
                 //experience = Integer.parseInt(dados.getJSONObject("usuario").getString("experiencia"));
                 String photoPerfil = dados.getJSONObject("usuario").getString("fotoPerfil");
-                String data = "11/10/2017";//dados.getString("dataPublicacao");
                 String nome = dados.getJSONObject("usuario").getString("nome");
                 String local = dados.getJSONObject("desafio").getString("nome");
                 String photoChallenge = dados.getString("fotoUrl");
-                String like =  "0";//dados.getJSONObject("desafio").getString("q tdLike");
-                String dislike = "0"; //dados.getJSONObject("desafio").getString("qtdDislike");
-                arrayListChallenge.add(new UserChallenge(nome, local, data, photoPerfil, photoChallenge, like, dislike));
+                String qtdLikes = dados.getString("curtidas");
+                String qtdDislikes = dados.getString("descurtidas");
+                String data = dados.getString("criadoEm");
+                data = data.substring(0,9);
+                Log.d(null, "data: " +data);
+                String[] date = data.split("-");
+                StringBuilder sb = new StringBuilder();
+                sb.append(date[2]);
+                sb.append("/" +date[1]);
+                sb.append("/" + date[0]);
+                 arrayListChallenge.add(new UserChallenge(nome, local, sb.toString(), photoPerfil, photoChallenge, qtdLikes, qtdDislikes));
             }
         }
         catch (JSONException e){

@@ -14,7 +14,7 @@
     <string name="cancel">Cancelar</string>
     <string name="challengesMenu">Desafios</string>
     <string name="changeConfigure">Trocar senha</string>
-    <string name="changePasswordInvalid">Senha deve conter pelo menos um símbolo, uma letra maiúscula e um número</string>
+    <string name="changePasswordInvalid">Senha deve conter pelo menos um símbolo, uma letra maiúscula, um número e 8 caracteres</string>
     <string name="changeSucessfull">Senha alterada com sucesso</string>
     <string name="cityRegisterBio">Cidade</string>
     <string name="close">Fechar</string>
@@ -34,7 +34,7 @@
     <string name="errorEmailInvalid">E-mail inválido</string>
     <string name="errorFieldRequired">Campo requerido</string>
     <string name="errorIncorrectLogin">Senha ou usuário incorreto</string>
-    <string name="errorInvalidPassword">Senha deve conter mais de 6 caracteres</string>
+    <string name="errorInvalidPassword">Senha deve conter no minimo 8 caracteres</string>
     <string name="errorInvalidUser">Nome de usuário deve conter mais de 3 caracteres</string>
     <string name="errorNameInvalid">Nome muito curto</string>
     <string name="followMenu">Seguidores</string>

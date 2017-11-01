@@ -94,9 +94,6 @@ public class RegisterBioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 verifyLocationPermission();
-                UserCityCountry mCityCountry = new UserCityCountry(mlatitude, mlongitude);
-                mCityCountry.execute();
-
             }
         });
 
@@ -169,6 +166,8 @@ public class RegisterBioActivity extends AppCompatActivity {
 
             mlatitude  = String.valueOf(currentLocation.getLatitude());
             mlongitude = String.valueOf(currentLocation.getLongitude());
+            UserCityCountry mCityCountry = new UserCityCountry(mlatitude, mlongitude);
+            mCityCountry.execute();
         }
     }
 
@@ -266,6 +265,11 @@ public class RegisterBioActivity extends AppCompatActivity {
             relativeHide.setVisibility(View.VISIBLE);
             editTextCountry.setText(String.valueOf(cc[1]));
             editTextCity.setText(String.valueOf(cc[0]));
+            if(cc != null){
+                relativeHide.setVisibility(View.VISIBLE);
+                editTextCountry.setText(String.valueOf(cc[1]));
+                editTextCity.setText(String.valueOf(cc[0]));
+            }
         }
 
 

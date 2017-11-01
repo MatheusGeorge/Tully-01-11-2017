@@ -17,8 +17,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewPhotoPerfil"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="left"
@@ -34,44 +34,27 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imageViewPhotoPerfil"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="11dp"
             android:layout_toEndOf="@+id/imageViewPhotoPerfil"
+            android:text="Nome de uma pessoa"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textViewCountryCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewName"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="4dp"
-            android:layout_toEndOf="@+id/imageViewPhotoPerfil"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center">
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_below="@+id/textViewName"
+            android:layout_toEndOf="@+id/imageViewPhotoPerfil"
             android:text="@string/challengeTitle"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="14dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="340dp"
@@ -132,7 +115,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_column="0"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="center_horizontal|end"
                 android:layout_marginEnd="10dp"
                 android:layout_row="0"
                 android:background="@drawable/ic_photo_like" />

@@ -37,7 +37,9 @@ public class ChallengeArrayAdapter extends RecyclerView.Adapter<ChallengeArrayAd
         public static TextView like;
         public static TextView dislike;
         public static ImageView photoChallenge;
+        public static ImageView photoPerfil;
         public static TextView data;
+        public static TextView name;
         private final Context context;
 
         public ViewHolder(final View itemView) {
@@ -47,6 +49,8 @@ public class ChallengeArrayAdapter extends RecyclerView.Adapter<ChallengeArrayAd
             dislike = (TextView) itemView.findViewById(R.id.textViewDislike);
             photoChallenge = (ImageView) itemView.findViewById(R.id.imageViewPhoto);
             data = (TextView) itemView.findViewById(R.id.textViewDate);
+            photoPerfil = (ImageView) itemView.findViewById(R.id.imageViewPhotoPerfil);
+            name = (TextView) itemView.findViewById(R.id.textViewName);
             context = itemView.getContext();
         }
     }
@@ -61,11 +65,16 @@ public class ChallengeArrayAdapter extends RecyclerView.Adapter<ChallengeArrayAd
         ViewHolder.location.setText(userChallenge.getLocal());
         ViewHolder.like.setText(userChallenge.getLike());
         ViewHolder.dislike.setText(userChallenge.getDislike());
+        ViewHolder.name.setText(userChallenge.getNome());
 
         if (userChallenge.getFotoUrlChallenge().equals(""))
             ViewHolder.photoChallenge.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable
         else
             new LoadImageTask(ViewHolder.photoChallenge).execute(userChallenge.getFotoUrlChallenge());
+        if (userChallenge.getFotoUrlChallenge().equals(""))
+            ViewHolder.photoPerfil.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable
+        else
+        new LoadImageTask(ViewHolder.photoPerfil).execute(userChallenge.getFotoUrlPerfil());
 
     }
 

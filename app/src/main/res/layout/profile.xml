@@ -140,7 +140,7 @@
                 android:background="@drawable/gradient"
                 android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:popupTheme="@style/AppTheme">
 
                 <ImageView

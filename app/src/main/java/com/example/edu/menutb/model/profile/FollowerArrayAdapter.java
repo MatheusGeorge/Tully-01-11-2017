@@ -21,6 +21,7 @@ import com.example.edu.menutb.model.service.RecyclerItemClickListener;
 import com.example.edu.menutb.model.UserTully;
 import com.example.edu.menutb.view.profile.ProfileActivity;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
+import com.example.edu.menutb.model.service.CalculateLevel;
 
 import java.util.ArrayList;
 
@@ -75,12 +76,12 @@ public class FollowerArrayAdapter extends RecyclerView.Adapter<FollowerArrayAdap
 
         final UserTully userTully = arrayListUserTully.get(position);
 
-        int experiencia = Integer.parseInt(userTully.getExperiencia());
+
 
         ViewHolder.name.setText(userTully.getName());
         ViewHolder.userName.setText(userTully.getUserName());
         ViewHolder.local.setText(userTully.getPais() + " - " + userTully.getCidade());
-        ViewHolder.level.setText(experiencia<20? ViewHolder.context.getString(R.string.profileLevel) + " 1":ViewHolder.context.getString(R.string.profileLevel)+" 2");
+        ViewHolder.level.setText(ViewHolder.context.getString(R.string.profileLevel) + new CalculateLevel().calculateLevelToPerfil(userTully.getExperiencia()));
         if (userTully.getFoto_url().equals("")){
             ViewHolder.photoPerfilRanking.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable
         }

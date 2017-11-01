@@ -124,65 +124,72 @@ public class RegisterActivity extends AppCompatActivity {
         String user = userRegister.getText().toString();
         String password = passwordRegister.getText().toString();
         String passwordConfirm = confirmPasswordRegister.getText().toString();
-        boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(name)) {
             nameRegister.setError(getString(R.string.errorFieldRequired));
             focusView = nameRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         } else if (!isNameValid(name)) {
             nameRegister.setError(getString(R.string.errorNameInvalid));
             focusView = nameRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             emailRegister.setError(getString(R.string.errorFieldRequired));
             focusView = emailRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         } else if (!isEmailValid(email)) {
             emailRegister.setError(getString(R.string.errorEmailInvalid));
             focusView = emailRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         }
         // Check for a valid user
         if (TextUtils.isEmpty(user)) {
             userRegister.setError(getString(R.string.errorFieldRequired));
             focusView = userRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         } else if (!isUserValid(user)) {
             userRegister.setError(getString(R.string.errorInvalidUser));
             focusView = userRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         }
         //Check for a valid password
         if (TextUtils.isEmpty(password)) {
             passwordRegister.setError(getString(R.string.errorFieldRequired));
             focusView = passwordRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         } else if (!isPasswordValid(password)) {
             passwordRegister.setError(getText(R.string.changePasswordInvalid));
+            focusView = passwordRegister;
+            focusView.requestFocus();
+            return;
         }
         //Check if the confirmPassword is equals
         if (TextUtils.isEmpty(passwordConfirm)) {
             confirmPasswordRegister.setError(getString(R.string.errorFieldRequired));
             focusView = confirmPasswordRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         } else if (!isConfirmPasswordValid(password, passwordConfirm)) {
             confirmPasswordRegister.setError(getString(R.string.errorConfirmPasswordInvalid));
             focusView = confirmPasswordRegister;
-            cancel = true;
+            focusView.requestFocus();
+            return;
         }
 
-        if (cancel) {
-            focusView.requestFocus();
-        } else {
-            mVerifyUserTask = new VerifyUserTask(user, email);
-            mVerifyUserTask.execute();
-        }
+        mVerifyUserTask = new VerifyUserTask(user, email);
+        mVerifyUserTask.execute();
     }
 
     private class VerifyUserTask extends AsyncTask<String, Void, Integer> {

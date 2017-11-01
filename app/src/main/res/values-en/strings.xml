@@ -40,7 +40,7 @@
     <string name="actionSignUp">Sign Up</string>
     <string name="actionForgotPassword">Forgot the password?</string>
     <string name="errorInvalidUser">Username must have more than 3 letters</string>
-    <string name="errorInvalidPassword">Password must have more than 6 characters</string>
+    <string name="errorInvalidPassword">Password must contain 8 characters</string>
     <string name="errorIncorrectLogin">Incorrect user or password</string>
     <string name="errorFieldRequired">Field is required</string>
     <string name="recoverCode">Send me a recover code</string>
@@ -101,7 +101,7 @@
 
     <!--ChangePasswordActivity-->
     <string name="oldPassword">Old Password</string>
-    <string name="changePasswordInvalid">Passwords must have at least one non-alpha-numeric, lowercase, uppercase character and one number</string>
+    <string name="changePasswordInvalid">Passwords must have at least one non-alpha-numeric, lowercase, uppercase character, one number and 8 characters</string>
     <string name="passwordWrongChange">Incorrect old password</string>
     <string name="changeSucessfull">Password changed successfully</string>
 

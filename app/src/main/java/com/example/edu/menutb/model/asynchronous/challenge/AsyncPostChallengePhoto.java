@@ -32,7 +32,9 @@ public class AsyncPostChallengePhoto {
         try {
             Log.d(null, "Começou a transformar o bitmap");
             //Transformar bitmap em uma resolução e qualidade menor
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
             outputStream = new FileOutputStream(imagePath);
 
             bitmap = new BitmapResizer().bitmapResizer(bitmap, 512, 512);

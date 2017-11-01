@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.edu.menutb.R;
+import com.example.edu.menutb.model.profile.ChallengeArrayAdapter;
+import com.example.edu.menutb.model.profile.FollowerArrayAdapter;
+import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.controller.SearchController;
 import com.example.edu.menutb.model.search.SearchArrayAdapter;
 import com.example.edu.menutb.model.service.RecyclerItemClickListener;
@@ -64,7 +67,8 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         public static TextView dislike;
         public static TextView date;
         public static ImageView photoTimeline;
-        private final Context context;
+        public static TextView level;
+        public static Context context;
 
         public ViewHolder(final View itemView) {
             super(itemView);

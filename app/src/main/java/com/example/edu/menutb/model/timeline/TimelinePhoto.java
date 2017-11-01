@@ -19,7 +19,7 @@ public class TimelinePhoto{
     private String id;
     private String experiencia;
     private String cidade;
-    private String pais;
+    private String pais;;
 
     public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String userComment, String date, ArrayList<String> comments) {
         this.photoPerfil = photoPerfil;
