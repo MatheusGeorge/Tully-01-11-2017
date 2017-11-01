@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--troca a cor do texto do menu lateral selecionado/não selecionado-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/colorAccent" android:state_checked="true" />
+    <item android:color="@color/colorPreto" />
+</selector>

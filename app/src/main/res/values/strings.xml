@@ -1,0 +1,151 @@
+<resources>
+    <string name="app_name">Tully</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="nameNav">Nome do Usuário</string>
+    <string name="toolbarSearchHint">Search by username</string>
+    <string name="titleAbout" translatable="false">Tully</string>
+    <string name="emptyString"></string>
+    <string name="challengeTitle" translatable="false">Praça da Sé</string>
+    <string name="photoDate">2 de setembro de 2017</string>
+    <string name="numberLike" translatable="false">16</string>
+
+    <!--AboutActivity-->
+    <string name="textAbout">Tully Social Network was developed in 2017 by FATEC Ipiranga students Eduardo, Jefferson, Jonathan and Matheus as part of their Undergraduate Thesis.</string>
+    <string name="missionAbout">Our mission: make a social network that works best for users that leave their home, so they can meet different places everyday!</string>
+    <string name="developedAbout">DEVELOPED BY</string>
+    <string name="namesAbout">Eduardo Diniz de Oliveira, Jefferson Kenichi Fukuda, Jonathan Bertoldi da Silva and Matheus George Vieira</string>
+    <string name="versionAbout">Version 1.0</string>
+
+    <!-- Menu -->
+    <string name="profileMenu">Profile</string>
+    <string name="timelineMenu" translatable="false">Timeline</string>
+    <string name="notificationsMenu">Notifications</string>
+    <string name="aboutMenu">About</string>
+    <string name="challengesMenu">Challenges</string>
+    <string name="rankingMenu" translatable="false">Ranking</string>
+    <string name="accountMenu">Account</string>
+    <string name="configureMenu">Configuration</string>
+    <string name="signOutMenu">Sign out</string>
+    <string name="searchMenu">Search</string>
+
+    <!--Configurations-->
+    <string name="changeConfigure">Change password</string>
+    <string name="termsConfigure">Terms of use</string>
+    <string name="emailConfigure">Email notifications</string>
+    <string name="deleteConfigure">Delete account</string>
+    <string name="reportConfigure">Report User</string>
+    <string name="inativateButton">Inactivate Account</string>
+
+    <!--LoginActivity-->
+    <string name="promptUser">User</string>
+    <string name="promptPassword">Password</string>
+    <string name="actionSignIn">Sign in</string>
+    <string name="actionSignUp">Sign Up</string>
+    <string name="actionForgotPassword">Forgot the password?</string>
+    <string name="errorInvalidUser">Username must have more than 3 letters</string>
+    <string name="errorInvalidPassword">Password must have more than 6 characters</string>
+    <string name="errorIncorrectLogin">The user or password is incorrect</string>
+    <string name="errorFieldRequired">This field is required</string>
+    <string name="permissionRationale" translatable="false">Contacts permissions are needed for providing email completions</string>
+    <string name="recoverCode">E-mail me a recover code</string>
+    <string name="alreadyCode">I already have a code</string>
+    <string name="email">Email</string>
+    <string name="send">Send</string>
+    <string name="code">Code</string>
+    <string name="promptNewPassword">New Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="save">Save</string>
+    <string name="loginErrorAdmin">You do not have the permission to login as admin</string>
+    <string name="loginErrorUser">Incorrect user or password</string>
+    <string name="connectionError">Connection Error</string>
+    <string name="loginAccept">Loading, please wait...</string>
+
+    <!--RegisterActivity -->
+    <string name="register">Register</string>s
+    <string name="nameRegister">Name</string>
+    <string name="emailRegister">Email</string>
+    <string name="userRegister">User</string>
+    <string name="passwordRegister">Password</string>
+    <string name="confirmPasswordRegister">Confirm password</string>
+    <string name="nextRegister">Next</string>
+    <string name="errorNameInvalid">This name is too short</string>
+    <string name="errorConfirmPasswordInvalid">Passwords don\'t match</string>
+    <string name="errorEmailInvalid">Invalid e-mail</string>
+    <string name="alreadyExistsUsername">User already exists!</string>
+    <string name="alreadyExistsEmail">Email already exists!</string>
+
+    <!--RegisterPhotoActivity-->
+    <string name="skipRegisterPhoto">Skip</string>
+    <string name="nextRegisterPhoto">Next</string>
+    <string name="textRegisterPhoto">Pick your profile picture</string>
+
+    <!--RegisterBioActivity-->
+    <string name="registerBio">Last step</string>
+    <string name="cityRegisterBio">City</string>
+    <string name="stateRegisterBio">State</string>
+    <string name="countryRegisterBio">Country</string>
+    <string name="loginAcceptTerms">Accept</string>
+    <string name="agreeTermsRegisterBio">I agree to the Terms and Conditions</string>
+    <string name="confirmRegisterBio">Confirm</string>
+    <string name="termsNotAccepted">Accept the Terms to proceed</string>
+    <string name="userCreatedRegisterBio">The user has been created, please confirm the email</string>
+    <string name="getUserLocationButton">Get my location</string>
+
+    <!--ProfileActivity-->
+    <string name="profileFollowers">Followers</string>
+    <string name="profileFollowing">Following</string>
+    <string name="profileChallenges">Challenges</string>
+    <string name="profileCountry">Country</string>
+    <string name="profileCity">City</string>
+    <string name="profileLevel">Level</string>
+    <string name="profileChallengesPhotos">Challenges photos</string>
+    <string name="profileName">Nome do Usuário</string>
+    <string name="profileExperience">Experience</string>
+    <string name="followOK">You are now following</string>
+    <string name="followMessage">Are you sure you want to unfollow </string>
+
+    <!--ChangePasswordActivity-->
+    <string name="oldPassword">Old Password</string>
+    <string name="changePasswordInvalid">Passwords must have at least one non-alpha-numeric, lowercase, uppercase character and one number</string>
+    <string name="passwordWrongChange">Old password doesn\'t match</string>
+    <string name="changeSucessfull">Password changed successfully</string>
+
+    <!--Configure-->
+    <string name="youSure">Are you sure you want to delete your account?</string>
+    <string name="youSureSignOut">Are you sure you want to sign out?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+
+    <!--Challenge Top Sheet-->
+    <string name="challengeDistanceLabel">Distance:</string>
+    <string name="challengeDistanceValue" translatable="false">XX</string>
+    <string name="challengeExp">Win:</string>
+
+    <!--Challenges Bottom Sheet-->
+    <string name="challengeName" translatable="false">Caixa Cultural</string>
+    <string name="challengeAdress" translatable="false">Praça da Sé, 111</string>
+    <string name="challengeCity" translatable="false">São Paulo</string>
+    <string name="challengeState" translatable="false">SP</string>
+    <string name="challengeCountry" translatable="false">Brasil</string>
+    <string name="challengeDescription" translatable="false">Não há/Prédio que é um marco arquitetônico em São Paulo. Há sempre ótimas exposições e peças gratuitas. Várias exposições de artes, música e teatro.</string>
+    <string name="challengePhone" translatable="false">(11) 3121-4400</string>
+    <string name="challengeReview" translatable="false">Prédio que é um marco arquitetônico em São Paulo. Há sempre ótimas exposições e peças gratuitas. Várias exposições de artes, música e teatro.</string>
+    <string name="challengeSite" translatable="false">http://www.caixacultural.gov.br</string>
+    <string name="distanceLabel">Distance</string>
+    <string name="followMenu">Follow</string>
+    <string name="inactivateButton">Inactivate Account</string>
+    <string name="userNameNotFound">Username not found</string>
+    <string name="doChallenge">Challenge Accepted!</string>
+    <string name="challengeComplete">Challenge Completed</string>
+
+
+    <string name="noUserFound">No users found</string>
+
+</resources>

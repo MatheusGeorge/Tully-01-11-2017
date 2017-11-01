@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewTextoAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewAbout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/textAbout"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/imageViewAbout"
+        android:layout_width="144dp"
+        android:layout_height="164dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/ic_logo" />
+
+    <TextView
+        android:id="@+id/textViewMissionAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewTextoAbout"
+        android:layout_marginTop="12dp"
+        android:text="@string/missionAbout"
+        android:textAlignment="center"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textViewDesenvolvidoAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewMissionAbout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/developedAbout"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewNamesAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textViewDesenvolvidoAbout"
+        android:layout_marginTop="12dp"
+        android:text="@string/namesAbout"
+        android:textAlignment="center"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textViewVersaoAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewNamesAbout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/versionAbout"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>

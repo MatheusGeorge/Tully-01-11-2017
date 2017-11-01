@@ -1,0 +1,130 @@
+<resources>
+    <string name="app_name">Tully</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="nameNav">User Name</string>
+    <string name="toolbarSearchHint">Search by username</string>
+    <string name="photoDate">September 2, 2017</string>
+
+    <!--AboutActivity-->
+    <string name="textAbout">Tully Social Network was developed in 2017 by FATEC Ipiranga students Eduardo, Jefferson, Jonathan and Matheus as part of their Undergraduate Thesis.</string>
+    <string name="missionAbout">Our mission: make a social network that works best for users that leave their home, so they can meet different places everyday!</string>
+    <string name="developedAbout">Developed by</string>
+    <string name="namesAbout">Eduardo Diniz de Oliveira, Jefferson Kenichi Fukuda, Jonathan Bertoldi da Silva and Matheus George Vieira</string>
+    <string name="versionAbout">Version 1.0</string>
+
+    <!-- Menu -->
+    <string name="profileMenu">Profile</string>
+    <string name="notificationsMenu">Notifications</string>
+    <string name="aboutMenu">About</string>
+    <string name="challengesMenu">Challenges</string>
+    <string name="accountMenu">Account</string>
+    <string name="configureMenu">Configuration</string>
+    <string name="signOutMenu">Sign out</string>
+    <string name="followMenu">Followers</string>
+    <string name="searchMenu">Search</string>
+
+    <!--Configurations-->
+    <string name="changeConfigure">Change password</string>
+    <string name="termsConfigure">User Terms</string>
+    <string name="emailConfigure">E-mail notifications</string>
+    <string name="deleteConfigure">Delete account</string>
+    <string name="reportConfigure">Report User</string>
+    <string name="inactivateButton">Inactivate Account</string>
+
+    <!--LoginActivity-->
+    <string name="promptUser">User</string>
+    <string name="promptPassword">Password</string>
+    <string name="actionSignIn">Sign in</string>
+    <string name="actionSignUp">Sign Up</string>
+    <string name="actionForgotPassword">Forgot the password?</string>
+    <string name="errorInvalidUser">Username must have more than 3 letters</string>
+    <string name="errorInvalidPassword">Password must have more than 6 characters</string>
+    <string name="errorIncorrectLogin">Incorrect user or password</string>
+    <string name="errorFieldRequired">Field is required</string>
+    <string name="recoverCode">Send me a recover code</string>
+    <string name="alreadyCode">I already have a code</string>
+    <string name="email">E-mail</string>
+    <string name="send">Send</string>
+    <string name="code">Code</string>
+    <string name="promptNewPassword">New Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="save">Save</string>
+    <string name="loginErrorAdmin">You do not have the permission to login as admin</string>
+    <string name="loginErrorUser">Incorrect user or password</string>
+    <string name="connectionError">Connection Error</string>
+
+    <!--RegisterActivity -->
+    <string name="register">Register</string>
+    <string name="nameRegister">Name</string>
+    <string name="emailRegister">E-mail</string>
+    <string name="userRegister">Username</string>
+    <string name="passwordRegister">Password</string>
+    <string name="confirmPasswordRegister">Confirm password</string>
+    <string name="nextRegister">Next</string>
+    <string name="errorNameInvalid">Name is too short</string>
+    <string name="errorConfirmPasswordInvalid">Passwords don\'t match</string>
+    <string name="errorEmailInvalid">Invalid e-mail</string>
+    <string name="alreadyExistsUsername">User already exists!</string>
+    <string name="alreadyExistsEmail">Email already exists!</string>
+
+    <!--RegisterPhotoActivity-->
+    <string name="skipRegisterPhoto">Skip</string>
+    <string name="nextRegisterPhoto">Next</string>
+    <string name="textRegisterPhoto">Pick your profile picture</string>
+
+    <!--RegisterBioActivity-->
+    <string name="registerBio">Last step</string>
+    <string name="cityRegisterBio">City</string>
+    <string name="stateRegisterBio">State</string>
+    <string name="countryRegisterBio">Country</string>
+    <string name="loginAcceptTerms">Accept</string>
+    <string name="agreeTermsRegisterBio">I accept the Terms and Conditions</string>
+    <string name="confirmRegisterBio">Confirm</string>
+    <string name="termsNotAccepted">Accept the Terms to proceed</string>
+    <string name="userCreatedRegisterBio">User created, confirm the e-mail</string>
+    <string name="getUserLocationButton">Get my location</string>
+
+    <!--ProfileActivity-->
+    <string name="profileFollowers">Followers</string>
+    <string name="profileFollowing">Following</string>
+    <string name="profileChallenges">Challenges</string>
+    <string name="profileCountry">Country</string>
+    <string name="profileCity">City</string>
+    <string name="profileChallengesPhotos">Challenges Photos</string>
+    <string name="profileName">User Name</string>
+    <string name="profileExperience">Experience</string>
+    <string name="followOK">You are now following</string>
+    <string name="followMessage">Are you sure you want to unfollow </string>
+
+
+    <!--ChangePasswordActivity-->
+    <string name="oldPassword">Old Password</string>
+    <string name="changePasswordInvalid">Passwords must have at least one non-alpha-numeric, lowercase, uppercase character and one number</string>
+    <string name="passwordWrongChange">Incorrect old password</string>
+    <string name="changeSucessfull">Password changed successfully</string>
+
+    <!--Configure-->
+    <string name="youSure">Are you sure you want to delete your account?</string>
+    <string name="youSureSignOut">Are you sure you want to sign out?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+
+    <!--Bottom Sheet-->
+    <string name="distanceLabel">Distance</string>
+    <string name="loginAccept">Loading, please wait...</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="profileLevel">Level</string>
+    <string name="inativateButton">Inactivate Account</string>
+    <string name="challengeDistanceLabel">Distance:</string>
+    <string name="challengeExp">Win:</string>
+    <string name="userNameNotFound">Username not found</string>
+    <string name="doChallenge">Challenge Accepted!</string>
+    <string name="challengeComplete">Challenge Completed</string>
+
+    <string name="noUserFound">No users found</string>
+
+</resources>

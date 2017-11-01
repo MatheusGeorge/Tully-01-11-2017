@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutRegisterBio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@drawable/gradient"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewRegisterBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:text="@string/registerBio"
+            android:textColor="@android:color/white"
+            android:textSize="36sp" />
+
+        <Button
+            android:id="@+id/getCurrentLocationButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewRegisterBio"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="@color/colorAccent"
+            android:gravity="center"
+            android:hint="@string/getUserLocationButton"
+            android:textColorHint="@color/colorBranco"
+            android:textSize="22sp" />
+
+        <RelativeLayout
+            android:id="@+id/relativeHide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/getCurrentLocationButton"
+            android:layout_marginTop="24dp"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/textViewLabelCountryRegisterBio"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@android:color/white"
+                android:gravity="end|center_vertical"
+                android:hint="@string/countryRegisterBio"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewCountryRegisterBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textViewLabelCountryRegisterBio"
+                android:layout_alignBottom="@+id/textViewLabelCountryRegisterBio"
+                android:layout_gravity="start|center_vertical"
+                android:layout_toEndOf="@+id/textViewLabelCountryRegisterBio"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewLabelCityRegisterBio"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textViewLabelCountryRegisterBio"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewLabelCountryRegisterBio"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@android:color/white"
+                android:gravity="end"
+                android:hint="@string/cityRegisterBio"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewCityRegisterBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textViewCountryRegisterBio"
+                android:layout_alignTop="@+id/textViewLabelCityRegisterBio"
+                android:layout_gravity="start|center_vertical"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:id="@+id/checkBoxTermsRegisterBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonConfirmRegisterBio"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:text="@string/agreeTermsRegisterBio"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/buttonConfirmRegisterBio"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="18dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/confirmRegisterBio"
+            android:textColorHint="@android:color/white" />
+
+    </RelativeLayout>
+
+</LinearLayout>

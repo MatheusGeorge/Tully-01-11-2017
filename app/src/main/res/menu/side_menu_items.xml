@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navTimeline"
+            android:checked="true"
+            android:icon="@drawable/ic_menu_timeline"
+            android:title="@string/timelineMenu" />
+        <item
+            android:id="@+id/navChallenges"
+            android:icon="@drawable/ic_menu_challenge"
+            android:title="@string/challengesMenu" />
+        <item
+            android:id="@+id/navProfile"
+            android:icon="@drawable/ic_menu_profiles"
+            android:title="@string/profileMenu" />
+
+        <item
+            android:id="@+id/navNotifications"
+            android:icon="@drawable/ic_menu_notification"
+            android:title="@string/notificationsMenu" />
+
+        <item
+            android:id="@+id/navRanking"
+            android:icon="@drawable/ic_menu_search"
+            android:title="@string/searchMenu" />
+
+        <item
+            android:id="@+id/navRankingg"
+            android:icon="@drawable/ic_menu_ranking"
+            android:title="@string/rankingMenu" />
+    </group>
+
+    <item android:title="@string/accountMenu" android:id="@+id/menuTitle">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/navConfigure"
+                    android:icon="@drawable/ic_menu_configurations"
+                    android:title="@string/configureMenu" />
+                <item
+                    android:id="@+id/navSignOut"
+                    android:icon="@drawable/ic_menu_sign_out"
+                    android:title="@string/signOutMenu" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
+
