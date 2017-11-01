@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.edu.menutb.R;
@@ -69,6 +70,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         public static ImageView photoTimeline;
         public static TextView level;
         public static Context context;
+        public static RelativeLayout relativeLayout;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -83,13 +85,14 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             date = (TextView) itemView.findViewById(R.id.textViewDate);
             photoTimeline = (ImageView) itemView.findViewById(R.id.imageViewPhoto);
             context = itemView.getContext();
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.timeline_top_recycler_view);
         }
     }
     //===================================================================================================================================================================================
     //                                                                              ONBIND VIEW HOLDER
     //===================================================================================================================================================================================
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final TimelinePhoto timelinePhoto = arrayListTimeline.get(position);
 
@@ -98,6 +101,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.date.setText(timelinePhoto.getDate());
         ViewHolder.dislike.setText(timelinePhoto.getDislike());
         ViewHolder.like.setText(timelinePhoto.getLike());
+        ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new goToProfile(arrayListTimeline.get(position)).execute();
+            }
+        });
         if (timelinePhoto.getPhotoTimeline().equals("") && timelinePhoto.getPhotoPerfil().equals("")){
             ViewHolder.photoTimeline.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
             ViewHolder.photoPerfil.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
@@ -133,18 +142,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     @Override
     public TimelineArrayAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.timeline_list_item, viewGroup, false);
-        recyclerView = (RecyclerView) viewGroup.findViewById(R.id.timeline_recycleview);
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(context, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        new goToProfile(arrayListTimeline.get(position)).execute();
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
         return new ViewHolder(v);
     }
     //===================================================================================================================================================================================
