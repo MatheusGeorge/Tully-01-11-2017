@@ -1,6 +1,11 @@
 package com.example.edu.menutb.model.timeline;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,14 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.edu.menutb.R;
-import com.example.edu.menutb.model.profile.ChallengeArrayAdapter;
-import com.example.edu.menutb.model.profile.FollowerArrayAdapter;
-import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.controller.SearchController;
-import com.example.edu.menutb.model.search.SearchArrayAdapter;
-import com.example.edu.menutb.model.service.RecyclerItemClickListener;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -37,7 +36,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     private String tokenString;
     private String idString;
     private ArrayList<TimelinePhoto> arrayListTimeline;
-    private RecyclerView recyclerView;
     Context context;
 
     //===================================================================================================================================================================================
@@ -93,7 +91,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     //===================================================================================================================================================================================
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
         final TimelinePhoto timelinePhoto = arrayListTimeline.get(position);
 
         ViewHolder.name.setText(timelinePhoto.getName());
@@ -101,12 +98,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.date.setText(timelinePhoto.getDate());
         ViewHolder.dislike.setText(timelinePhoto.getDislike());
         ViewHolder.like.setText(timelinePhoto.getLike());
-        ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new goToProfile(arrayListTimeline.get(position)).execute();
-            }
-        });
         if (timelinePhoto.getPhotoTimeline().equals("") && timelinePhoto.getPhotoPerfil().equals("")){
             ViewHolder.photoTimeline.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
             ViewHolder.photoPerfil.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
@@ -123,6 +114,22 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             }
         });
 
+        ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new goToProfile(arrayListTimeline.get(position)).execute();
+            }
+        });
+
+        ViewHolder.photoTimeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogTimeline(timelinePhoto);
+
+            }
+
+        });
+
         ViewHolder.buttonDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +137,15 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             }
         });
     }
+
+    public void showDialogTimeline(TimelinePhoto timelinePhoto) {
+        final Dialog dialogPhotoTimeline = new Dialog(context);
+        dialogPhotoTimeline.setContentView(R.layout.testefoto);
+        ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageView2);
+        new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
+        dialogPhotoTimeline.show();
+    }
+
 
     //===================================================================================================================================================================================
     //                                                                          onCreateViewHolder
