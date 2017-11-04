@@ -18,7 +18,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewPhotoPerfil"
-            android:layout_width="77dp"
+            android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -76,7 +76,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/challengeTitle"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"

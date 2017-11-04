@@ -2,10 +2,6 @@ package com.example.edu.menutb.model.timeline;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -140,8 +136,8 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
 
     public void showDialogTimeline(TimelinePhoto timelinePhoto) {
         final Dialog dialogPhotoTimeline = new Dialog(context);
-        dialogPhotoTimeline.setContentView(R.layout.testefoto);
-        ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageView2);
+        dialogPhotoTimeline.setContentView(R.layout.photo_zoom);
+        ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoZoom);
         new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
         dialogPhotoTimeline.show();
     }

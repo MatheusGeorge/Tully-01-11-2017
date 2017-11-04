@@ -29,7 +29,8 @@
             android:paddingStart="8dp"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
-            android:layout_toStartOf="@+id/imageViewChallengeExpand" />
+            android:layout_toStartOf="@+id/imageViewChallengeExpand"
+            android:layout_alignEnd="@+id/imageViewChallengeExpand" />
 
         <TextView
             android:id="@+id/textViewDistanceLabel"
@@ -63,7 +64,7 @@
             android:textSize="18sp"
             android:layout_alignBaseline="@+id/textViewDistanceValue"
             android:layout_alignBottom="@+id/textViewDistanceValue"
-            android:layout_alignEnd="@+id/textViewChallengeName" />
+            android:layout_toStartOf="@+id/imageViewChallengeExpand" />
 
         <ImageButton
             android:id="@+id/imageViewChallengeExpand"
@@ -216,34 +217,41 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/imageViewChallengeSite"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="12dp"
                 android:padding="8dp"
                 android:shadowColor="@color/colorPreto"
                 android:shadowRadius="10"
                 android:textAlignment="center"
                 android:textColor="@color/colorBranco" />
 
-            <ImageView
-                android:id="@+id/imageViewChallengeRoute"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:srcCompat="@drawable/ic_challenge_route"
-                android:layout_below="@+id/buttonDoChallenge"
-                android:layout_centerHorizontal="true" />
-
-            <Button
-                android:id="@+id/buttonDoChallenge"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
-                android:hint="@string/doChallenge"
-                android:textAlignment="center"
-                android:textColorHint="@android:color/white"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_below="@+id/textViewChallengeDescription"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="28dp" />
+                android:layout_marginTop="12dp"
+                android:background="@drawable/linear_border"
+                android:backgroundTint="@color/colorAccent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewChallengeRoute"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    app:srcCompat="@drawable/ic_challenge_route" />
+
+                <Button
+                    android:id="@+id/buttonDoChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:elevation="1dp"
+                    android:hint="@string/doChallenge"
+                    android:textAlignment="center"
+                    android:textColorHint="@android:color/white" />
+            </LinearLayout>
 
         </RelativeLayout>
 
