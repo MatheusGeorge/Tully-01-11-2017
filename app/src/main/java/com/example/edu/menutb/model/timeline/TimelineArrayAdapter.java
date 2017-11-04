@@ -18,6 +18,9 @@ import android.widget.TextView;
 import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.SearchController;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
+
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -139,6 +142,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         dialogPhotoTimeline.setContentView(R.layout.photo_zoom);
         ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoZoom);
         new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
+        ImageView photoProfile = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoPerfil);
+        new LoadImageTask(photoProfile).execute(timelinePhoto.getPhotoPerfil());
+        TextView name = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewName);
+        name.setText(timelinePhoto.getName());
+        TextView local = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewLocation);
+        local.setText(timelinePhoto.getLocation());
         dialogPhotoTimeline.show();
     }
 
