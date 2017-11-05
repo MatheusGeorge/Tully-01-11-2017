@@ -239,14 +239,15 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
+                    android:layout_margin="8dp"
                     app:srcCompat="@drawable/ic_challenge_route" />
 
                 <Button
                     android:id="@+id/buttonDoChallenge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorAccent"
                     android:elevation="1dp"
                     android:hint="@string/doChallenge"
                     android:textAlignment="center"
