@@ -19,7 +19,9 @@ public class TimelinePhoto{
     private String id;
     private String experiencia;
     private String cidade;
-    private String pais;;
+    private String pais;
+    private String level;
+
 
     public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String userComment, String date, ArrayList<String> comments) {
         this.photoPerfil = photoPerfil;
@@ -32,7 +34,7 @@ public class TimelinePhoto{
         this.comments = comments;
     }
 
-    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date) {
+    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date,  String cidade, String level) {
         this.photoPerfil = photoPerfil;
         this.name = name;
         this.location = location;
@@ -40,6 +42,7 @@ public class TimelinePhoto{
         this.like = like;
         this.dislike = dislike;
         this.date = date;
+        this.level = level;
     }
 
     public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais) {

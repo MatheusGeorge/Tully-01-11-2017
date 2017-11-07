@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.SearchController;
+import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
 
 import org.w3c.dom.Text;
@@ -66,6 +67,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         public static TextView date;
         public static ImageView photoTimeline;
         public static TextView level;
+        public static TextView city;
         public static Context context;
         public static RelativeLayout relativeLayout;
 
@@ -81,6 +83,8 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             dislike = (TextView) itemView.findViewById(R.id.textViewDislike);
             date = (TextView) itemView.findViewById(R.id.textViewDate);
             photoTimeline = (ImageView) itemView.findViewById(R.id.imageViewPhoto);
+            city = (TextView) itemView.findViewById(R.id.textViewCountryCity);
+            level = (TextView) itemView.findViewById(R.id.textViewLevelXP);
             context = itemView.getContext();
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.timeline_top_recycler_view);
         }
@@ -97,6 +101,8 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.date.setText(timelinePhoto.getDate());
         ViewHolder.dislike.setText(timelinePhoto.getDislike());
         ViewHolder.like.setText(timelinePhoto.getLike());
+        ViewHolder.city.setText(timelinePhoto.getCidade() + " - " + timelinePhoto.getPais());
+        ViewHolder.level.setText(ViewHolder.context.getString(R.string.profileLevel) + new CalculateLevel().calculateLevelToPerfil(timelinePhoto.getExperiencia()));
         if (timelinePhoto.getPhotoTimeline().equals("") && timelinePhoto.getPhotoPerfil().equals("")){
             ViewHolder.photoTimeline.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
             ViewHolder.photoPerfil.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable

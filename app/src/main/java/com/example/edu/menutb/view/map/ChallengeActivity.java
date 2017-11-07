@@ -29,6 +29,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,6 +82,8 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     private static final int REQUEST_LOCATION = 1;
     private static final int REQUEST_CAMERA = 12345;
     private static final int PICK_FROM_GALLERY = 2;
+    private static final float ROTATE_FROM = 0.0f;
+    private static final float ROTATE_TO = 180.0f;
 
     GoogleMap mGoogleMap;
     MapView mMapView;
@@ -106,8 +110,9 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     TextView textViewName;
     TextView textViewWon;
     ImageView imageViewChallengeBackground;
+    ImageView imageViewChallengeExpand;
     TextView textViewDistance;
-
+    LinearLayout linearLayoutDoChallenge;
     GetChallengeTask mGetChallengeTask;
     LocationManager locationManager;
     Button buttonDoChallenge;
@@ -120,6 +125,8 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     String imagePath;
     String idDesafio;
     String realizado = "false";
+
+    Boolean expanded = false;
 
     @Nullable
     @Override
@@ -141,6 +148,8 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
         textViewWon = (TextView) myView.findViewById(R.id.textViewChallengeXP);
         imageViewChallengeBackground = (ImageView) myView.findViewById(R.id.imageViewChallengeBackground);
         buttonDoChallenge = (Button) myView.findViewById(R.id.buttonDoChallenge);
+        imageViewChallengeExpand = (ImageView) myView.findViewById(R.id.imageViewChallengeExpand);
+        linearLayoutDoChallenge = (LinearLayout) myView.findViewById(R.id.linearLayoutDoChallenge);
         textViewDistance = (TextView) myView.findViewById(R.id.textViewDistanceValue);
 
         SharedPreferences id = getContext().getSharedPreferences("id", Context.MODE_PRIVATE);
@@ -154,6 +163,16 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, new ChallengeActivity()).commit();
+            }
+        });
+
+        imageViewChallengeExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(expanded)
+                    llBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                else
+                    llBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -178,7 +197,7 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
                 loadPath(origin, dest);
                 fabDetails.setVisibility(View.VISIBLE);
                 llBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                buttonDoChallenge.setVisibility(View.INVISIBLE);
+                linearLayoutDoChallenge.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -283,6 +302,14 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
         }
     };
 
+    private void rotateIcon(){
+        RotateAnimation r; // = new RotateAnimation(ROTATE_FROM, ROTATE_TO);
+        r = new RotateAnimation(ROTATE_FROM, ROTATE_TO, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        r.setDuration((long) 2*500);
+        r.setRepeatCount(0);
+        imageViewChallengeExpand.startAnimation(r);
+    }
+
     public void checkin() {
         if (mGoogleMap == null) { //somente se o mapa estiver pronto
             Toast.makeText(getContext(), "Mapa não está pronto", Toast.LENGTH_LONG).show();
@@ -348,14 +375,19 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
         realizado = data[9];
         idDesafio = data[8];
         Location locationDest = new Location("");
-        locationDest.setLongitude(latLng.longitude);
-        locationDest.setLatitude(latLng.latitude);
-        String distanceInmeters = new ChallengeController().convertDistanceToString(currentLocation.distanceTo(locationDest));
-        if(new ChallengeController().outOfRange(currentLocation.distanceTo(locationDest)))
-            buttonDoChallenge.setVisibility(View.INVISIBLE);
-        else
-            buttonDoChallenge.setVisibility(View.VISIBLE);
-        textViewDistance.setText(distanceInmeters);
+        if(currentLocation!=null){
+            locationDest.setLongitude(latLng.longitude);
+            locationDest.setLatitude(latLng.latitude);
+            String distanceInmeters = new ChallengeController().convertDistanceToString(currentLocation.distanceTo(locationDest));
+            textViewDistance.setText(distanceInmeters);
+            if (new ChallengeController().outOfRange(currentLocation.distanceTo(locationDest)))
+                linearLayoutDoChallenge.setVisibility(View.INVISIBLE);
+            else
+                linearLayoutDoChallenge.setVisibility(View.VISIBLE);
+        } else {
+            textViewDistance.setText("0");
+            linearLayoutDoChallenge.setVisibility(View.INVISIBLE);
+        }
         textViewWon.setText((realizado.equals("true"))?(getContext().getText(R.string.challengeExp) + " 0xp"):(getContext().getText(R.string.challengeExp)+ " 10xp"));
         textViewName.setText(title);
         textViewChallengeAdress.setText(data[0]);
@@ -406,9 +438,13 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
                         fabDetails.animate().scaleX(1).scaleY(1).setDuration(300).start();
                         fabCancel.setVisibility(View.VISIBLE);
                     }
+                    expanded = false;
+                    rotateIcon();
                 } else if (BottomSheetBehavior.STATE_EXPANDED == newState) {
                     fabDetails.animate().scaleX(0).scaleY(0).setDuration(300).start();
                     fabCancel.setVisibility(View.INVISIBLE);
+                    expanded = true;
+                    rotateIcon();
                 } else if (BottomSheetBehavior.STATE_HIDDEN == newState) {
                     fabDetails.setVisibility(View.INVISIBLE);
                 }

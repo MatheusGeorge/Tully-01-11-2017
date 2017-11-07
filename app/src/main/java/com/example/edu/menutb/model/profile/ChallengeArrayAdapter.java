@@ -71,7 +71,7 @@ public class ChallengeArrayAdapter extends RecyclerView.Adapter<ChallengeArrayAd
             ViewHolder.photoChallenge.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable
         else
             new LoadImageTask(ViewHolder.photoChallenge).execute(userChallenge.getFotoUrlChallenge());
-        if (userChallenge.getFotoUrlChallenge().equals(""))
+        if (userChallenge.getFotoUrlPerfil().equals(""))
             ViewHolder.photoPerfil.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable
         else
         new LoadImageTask(ViewHolder.photoPerfil).execute(userChallenge.getFotoUrlPerfil());

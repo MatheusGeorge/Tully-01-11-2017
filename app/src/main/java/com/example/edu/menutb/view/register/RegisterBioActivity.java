@@ -262,9 +262,6 @@ public class RegisterBioActivity extends AppCompatActivity {
 
 
         protected void onPostExecute(String[] cc) {
-            relativeHide.setVisibility(View.VISIBLE);
-            editTextCountry.setText(String.valueOf(cc[1]));
-            editTextCity.setText(String.valueOf(cc[0]));
             if(cc != null){
                 relativeHide.setVisibility(View.VISIBLE);
                 editTextCountry.setText(String.valueOf(cc[1]));
