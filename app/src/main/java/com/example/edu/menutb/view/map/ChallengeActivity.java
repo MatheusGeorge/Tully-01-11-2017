@@ -303,11 +303,10 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     };
 
     private void rotateIcon(){
-        RotateAnimation r; // = new RotateAnimation(ROTATE_FROM, ROTATE_TO);
-        r = new RotateAnimation(ROTATE_FROM, ROTATE_TO, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        r.setDuration((long) 2*500);
-        r.setRepeatCount(0);
-        imageViewChallengeExpand.startAnimation(r);
+        if(expanded)
+            imageViewChallengeExpand.animate().rotation(180).start();
+        else
+            imageViewChallengeExpand.animate().rotation(0).start();
     }
 
     public void checkin() {

@@ -148,4 +148,6 @@
 
     <string name="noUserFound">No users found</string>
 
+    <string name="noPhotoTimeline">No photos in timeline</string>
+
 </resources>

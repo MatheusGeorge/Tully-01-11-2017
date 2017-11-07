@@ -87,7 +87,7 @@ public class TimelineActivity extends Fragment {
 
         protected void onPostExecute(ArrayList<TimelinePhoto> timelinePhotos) {
             if(timelinePhotos.size() == 0){
-                Snackbar.make(rootView, getString(R.string.connectionError), Snackbar.LENGTH_LONG)
+                Snackbar.make(rootView, getString(R.string.noPhotoTimeline), Snackbar.LENGTH_LONG)
                         .setAction(getText(R.string.close), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

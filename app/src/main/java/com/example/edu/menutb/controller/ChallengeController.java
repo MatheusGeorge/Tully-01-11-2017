@@ -41,12 +41,12 @@ public class ChallengeController {
     public String convertDistanceToString(float distance){
         String result = "";
         if(distance >= 100000){
-            result = String.valueOf((int) distance/1000) + " km";
+            result = String.valueOf((int) distance/1000) + "km";
         }
         else if(distance >= 1000){
-            result = String.format("%.2f",(distance/1000)) + " km";
+            result = String.format("%.2f",(distance/1000)) + "km";
         } else {
-            result = String.valueOf((int)distance) + " m";
+            result = String.valueOf((int)distance) + "m";
         }
         return result;
     }
