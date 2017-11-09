@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "856621051264",
+    "firebase_url": "https://tullyteste.firebaseio.com",
+    "project_id": "tullyteste",
+    "storage_bucket": "tullyteste.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856621051264:android:35253d4a8e9ef4c6",
+        "android_client_info": {
+          "package_name": "com.example.edu.menutb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856621051264-f9jakeaj0harppbih0qjbr6i00btqga8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edu.menutb",
+            "certificate_hash": "7d7687b4b30c061d08f4860a7c0c90f0ddd64e95"
+          }
+        },
+        {
+          "client_id": "856621051264-r9qb5o23qj5j8sao7jdq68dl18rc0ao2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFZM9dscmv3VhqCI4H4OurliRCj1RJAtw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856621051264-r9qb5o23qj5j8sao7jdq68dl18rc0ao2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

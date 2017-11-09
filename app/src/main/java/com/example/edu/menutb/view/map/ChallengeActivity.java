@@ -766,7 +766,7 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     private void showMessage() {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
         final View alterarView = layoutInflaterAndroid.inflate(R.layout.challenge_dialog_complete, null);
-        AlertDialog.Builder dialogName = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder dialogName = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         dialogName.setView(alterarView);
         dialogName.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogBox, int id) {
