@@ -145,6 +145,14 @@
     <string name="doChallenge">Challenge Accepted!</string>
     <string name="challengeComplete">Challenge Completed</string>
 
+    <!--Notifications-->
+    <string name="notificationFollow">Eduardo Diniz de Oliveira (edudiniz) now follows you!</string>
+    <string name="notificationLike">Eduardo Diniz de Oliveira (edudiniz) liked your challenge \"Praça da Sé\"!</string>
+    <string name="notificationDislike">Eduardo Diniz de Oliveira (edudiniz) didn\'t liked your challenge \"Praça da Sé\"!</string>
+
+    <!--Ranking-->
+    <string name="rankingLevel">Level:</string>
+    <string name="rankingXP">Experience:</string>
 
     <string name="noUserFound">No users found</string>
 

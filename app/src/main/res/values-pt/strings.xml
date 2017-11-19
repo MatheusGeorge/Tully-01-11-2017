@@ -105,4 +105,9 @@
     <string name="followMessage">Tem certeza que deseja deixar de seguir</string>
     <string name="followOK">Agora você segue</string>
     <string name="noPhotoTimeline">Nenhuma foto na timeline</string>
+    <string name="notificationFollow">Eduardo Diniz de Oliveira (edudiniz) agora segue você!</string>
+    <string name="notificationLike">Eduardo Diniz de Oliveira (edudiniz) curtiu seu desafio \"Praça da Sé\"!</string>
+    <string name="notificationDislike">Eduardo Diniz de Oliveira (edudiniz) não curtiu seu desafio \"Praça da Sé\"!</string>
+    <string name="rankingLevel">Nível:</string>
+    <string name="rankingXP">Experiência:</string>
 </resources>

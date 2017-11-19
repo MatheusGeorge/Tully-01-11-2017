@@ -19,7 +19,7 @@ public class NotificationAcitivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.notifications, container, false);
+        myView = inflater.inflate(R.layout.notifications_list, container, false);
         getActivity().setTitle("");
         return myView;
     }
