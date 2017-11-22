@@ -34,6 +34,7 @@ import com.example.edu.menutb.view.login.LoginActivity;
 import com.example.edu.menutb.view.map.ChallengeActivity;
 import com.example.edu.menutb.view.notification.NotificationAcitivity;
 import com.example.edu.menutb.view.profile.ProfileActivity;
+import com.example.edu.menutb.view.ranking.RankingActivity;
 import com.example.edu.menutb.view.search.SearchActivity;
 import com.example.edu.menutb.view.timeline.TimelineActivity;
 
@@ -237,6 +238,17 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             lastFragmentTag = "TAG4";
+            lastFragmentShowed = true;
+            isLastFragmentSupportType = false;
+        } else if (id == R.id.navRankingg) {
+            if(isLastFragmentSupportType && lastFragmentShowed){
+                android.support.v4.app.Fragment fr_v4 = getSupportFragmentManager().findFragmentByTag(lastFragmentTag);
+                getSupportFragmentManager().beginTransaction().remove(fr_v4).commit();
+            }
+            fragmentTransaction =  fragmentManager.beginTransaction().replace(R.id.content_frame, new RankingActivity(), "TAG6");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            lastFragmentTag = "TAG6";
             lastFragmentShowed = true;
             isLastFragmentSupportType = false;
         } else if (id == R.id.navSignOut) {

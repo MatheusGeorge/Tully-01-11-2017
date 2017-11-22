@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayoutList"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/border_bottom"
+    android:gravity="center"
     android:paddingBottom="13dp"
     android:paddingEnd="8dp"
     android:paddingStart="8dp"
-    android:paddingTop="8dp"
-    android:weightSum="1">
+    android:paddingTop="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewPerfilRanking"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_gravity="center_vertical|start"
         android:src="@color/colorBranco"
         app:civ_border_color="@color/colorAccent"
         app:civ_border_width="2dp" />
 
     <RelativeLayout
         android:id="@+id/relativeLayoutRanking"
-        android:layout_height="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"

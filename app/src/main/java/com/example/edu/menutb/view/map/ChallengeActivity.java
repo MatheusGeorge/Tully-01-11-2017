@@ -446,6 +446,8 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
                     rotateIcon();
                 } else if (BottomSheetBehavior.STATE_HIDDEN == newState) {
                     fabDetails.setVisibility(View.INVISIBLE);
+                    expanded = false;
+                    rotateIcon();
                 }
             }
 

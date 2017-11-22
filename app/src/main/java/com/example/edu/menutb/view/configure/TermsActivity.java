@@ -52,7 +52,7 @@ public class TermsActivity extends AppCompatActivity {
                 "<style>\n" +
                 "    body {\n" +
                 "        font-size: 1em;\n" +
-                "        background-color: #ff8700;\n" +
+                "        background-color: #0097a7;\n" +
                 "    }\n" +
                 "    h2, h4, p, ul{\n" +
                 "        margin: 0px;\n" +
