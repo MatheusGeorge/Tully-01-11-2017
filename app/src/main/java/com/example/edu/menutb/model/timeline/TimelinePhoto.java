@@ -1,5 +1,7 @@
 package com.example.edu.menutb.model.timeline;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 /**
@@ -21,7 +23,24 @@ public class TimelinePhoto{
     private String cidade;
     private String pais;
     private String level;
+    private Bitmap fotoPerfilBitmap;
+    private Bitmap fotoTimelineBitmap;
 
+    public Bitmap getFotoPerfilBitmap() {
+        return fotoPerfilBitmap;
+    }
+
+    public void setFotoPerfilBitmap(Bitmap fotoPerfilBitmap) {
+        this.fotoPerfilBitmap = fotoPerfilBitmap;
+    }
+
+    public Bitmap getFotoTimelineBitmap() {
+        return fotoTimelineBitmap;
+    }
+
+    public void setFotoTimelineBitmap(Bitmap fotoTimelineBitmap) {
+        this.fotoTimelineBitmap = fotoTimelineBitmap;
+    }
 
     public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String userComment, String date, ArrayList<String> comments) {
         this.photoPerfil = photoPerfil;

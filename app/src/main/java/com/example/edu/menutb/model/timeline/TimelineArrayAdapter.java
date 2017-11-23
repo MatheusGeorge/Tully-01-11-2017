@@ -17,10 +17,10 @@ import android.widget.TextView;
 
 import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.SearchController;
+import com.example.edu.menutb.controller.TimelineController;
 import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
 
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,6 +30,8 @@ import java.util.ArrayList;
 /**
  * Created by zBrito on 25/07/2017.
  */
+
+
 
 public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdapter.ViewHolder> {
 
@@ -103,19 +105,20 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.like.setText(timelinePhoto.getLike());
         ViewHolder.city.setText(timelinePhoto.getCidade() + " - " + timelinePhoto.getPais());
         ViewHolder.level.setText(ViewHolder.context.getString(R.string.profileLevel) + new CalculateLevel().calculateLevelToPerfil(timelinePhoto.getExperiencia()));
-        if (timelinePhoto.getPhotoTimeline().equals("") && timelinePhoto.getPhotoPerfil().equals("")){
+        if (timelinePhoto.getPhotoTimeline().equals(""))
             ViewHolder.photoTimeline.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
+        else
+            new LoadImageTask(ViewHolder.photoTimeline, timelinePhoto).execute(timelinePhoto.getPhotoTimeline(), "timeline");
+
+        if(timelinePhoto.getPhotoPerfil().equals(""))
             ViewHolder.photoPerfil.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
-        }
-        else{
-            new LoadImageTask(ViewHolder.photoTimeline).execute(timelinePhoto.getPhotoTimeline());
-            new LoadImageTask(ViewHolder.photoPerfil).execute(timelinePhoto.getPhotoPerfil());
-        }
+        else
+            new LoadImageTask(ViewHolder.photoPerfil, timelinePhoto).execute(timelinePhoto.getPhotoPerfil(), "perfil");
 
         ViewHolder.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //FAZ ALGUMA COISA QUANDO CLICKA NO LIKE
+                //new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE);
             }
         });
 
@@ -146,14 +149,21 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     public void showDialogTimeline(TimelinePhoto timelinePhoto) {
         final Dialog dialogPhotoTimeline = new Dialog(context);
         dialogPhotoTimeline.setContentView(R.layout.photo_zoom);
-        ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoZoom);
-        new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
-        ImageView photoProfile = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoPerfil);
-        new LoadImageTask(photoProfile).execute(timelinePhoto.getPhotoPerfil());
-        TextView name = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewName);
-        name.setText(timelinePhoto.getName());
-        TextView local = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewLocation);
-        local.setText(timelinePhoto.getLocation());
+        try{
+            ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoZoom);
+            photoTimeline.setImageBitmap(timelinePhoto.getFotoTimelineBitmap());
+            //new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
+            ImageView photoProfile = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoPerfil);
+            photoProfile.setImageBitmap(timelinePhoto.getFotoPerfilBitmap());
+            //new LoadImageTask(photoProfile).execute(timelinePhoto.getPhotoPerfil());
+
+            TextView name = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewName);
+            name.setText(timelinePhoto.getName());
+            TextView local = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewLocation);
+            local.setText(timelinePhoto.getLocation());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         dialogPhotoTimeline.show();
     }
 
@@ -176,9 +186,11 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     //===================================================================================================================================================================================
     private class LoadImageTask extends AsyncTask<String,Void,Bitmap> {
         private ImageView imageView;
+        private TimelinePhoto timelinePhoto;
 
-        public LoadImageTask(ImageView imageView) {
+        public LoadImageTask(ImageView imageView, TimelinePhoto timelinePhoto) {
             this.imageView = imageView;
+            this.timelinePhoto = timelinePhoto;
         }
 
         @Override
@@ -188,11 +200,14 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             HttpURLConnection connection = null;
 
             try {
-
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 try (InputStream inputStream = connection.getInputStream()) {
                     bitmap = BitmapFactory.decodeStream(inputStream);
+                    if(params[1].equals("timeline"))
+                        timelinePhoto.setFotoTimelineBitmap(bitmap);
+                    else
+                        timelinePhoto.setFotoPerfilBitmap(bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -241,6 +256,31 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
 
         }
     }
+
+    /*private class EvaluatePhotoTask extends AsyncTask<AvaliacaoEnum,Void,String> {
+        private TimelinePhoto timelinePhoto;
+
+        public EvaluatePhotoTask(TimelinePhoto timelinePhoto) {
+            this.timelinePhoto = timelinePhoto;
+        }
+
+        @Override
+        protected String doInBackground(AvaliacaoEnum... params) {
+            String result = "";
+            try {
+                result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+
+            }
+            return result;
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+
+        }
+    }*/
 
     //===================================================================================================================================================================================
     //                                                                          METODO LIKE

@@ -14,4 +14,8 @@ public class TimelineController {
     public ArrayList<TimelinePhoto> getTimeline(String idString, String tokenString){
         return new AsyncTimelineTask().getTimeline(idString, tokenString);
     }
+
+    public String evaluatePhotoPerfil(String idDesafio, String idString, String tokenString, String tipo){
+        return new AsyncTimelineTask().evaluatePhotoTimline(idDesafio, idString, tokenString, tipo, "");
+    }
 }

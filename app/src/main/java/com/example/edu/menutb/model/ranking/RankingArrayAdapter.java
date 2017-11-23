@@ -15,7 +15,7 @@ import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.ChallengeController;
 import com.example.edu.menutb.controller.ProfileController;
 import com.example.edu.menutb.controller.SearchController;
-import com.example.edu.menutb.model.UserTully; 
+import com.example.edu.menutb.model.UserTully;
 import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.model.service.RecyclerItemClickListener;
 import com.example.edu.menutb.view.profile.ProfileActivity;

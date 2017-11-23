@@ -100,4 +100,10 @@ public class AsyncTimelineTask {
         }
         return arrayListTimelinePhoto;
     }
+
+    public String evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url){
+        String response = "";
+
+        return response;
+    }
 }
