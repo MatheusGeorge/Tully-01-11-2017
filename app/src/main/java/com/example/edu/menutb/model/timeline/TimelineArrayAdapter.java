@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.SearchController;
 import com.example.edu.menutb.controller.TimelineController;
+import com.example.edu.menutb.model.asynchronous.timeline.AvaliacaoEnum;
 import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
 
@@ -34,6 +35,10 @@ import java.util.ArrayList;
 
 
 public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdapter.ViewHolder> {
+
+    private enum VerboEnum{
+        POST, DELETE, PATCH;
+    }
 
     private String tokenString;
     private String idString;
@@ -115,12 +120,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         else
             new LoadImageTask(ViewHolder.photoPerfil, timelinePhoto).execute(timelinePhoto.getPhotoPerfil(), "perfil");
 
-        ViewHolder.buttonLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE);
-            }
-        });
+
 
         ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,10 +138,27 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
 
         });
 
+        ViewHolder.buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(timelinePhoto.getType().equals(AvaliacaoEnum.NONE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE.toString(), VerboEnum.POST.toString());
+                else if(timelinePhoto.getType().equals(AvaliacaoEnum.LIKE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.NONE.toString(), VerboEnum.DELETE.toString());
+                else if(timelinePhoto.getType().equals(AvaliacaoEnum.DISLIKE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE.toString(), VerboEnum.PATCH.toString());
+            }
+        });
+
         ViewHolder.buttonDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //FAZ ALGUMA COISA QUANDO CLICKA NO COMMENT
+                if (timelinePhoto.getType().equals(AvaliacaoEnum.NONE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.DISLIKE.toString(), VerboEnum.POST.toString());
+                else if (timelinePhoto.getType().equals(AvaliacaoEnum.DISLIKE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.NONE.toString(), VerboEnum.DELETE.toString());
+                else if (timelinePhoto.getType().equals(AvaliacaoEnum.LIKE))
+                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.DISLIKE.toString(), VerboEnum.PATCH.toString());
             }
         });
     }
@@ -257,7 +274,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         }
     }
 
-    /*private class EvaluatePhotoTask extends AsyncTask<AvaliacaoEnum,Void,String> {
+    private class EvaluatePhotoTask extends AsyncTask<String,Void,String> {
         private TimelinePhoto timelinePhoto;
 
         public EvaluatePhotoTask(TimelinePhoto timelinePhoto) {
@@ -265,10 +282,10 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         }
 
         @Override
-        protected String doInBackground(AvaliacaoEnum... params) {
+        protected String doInBackground(String... params) {
             String result = "";
             try {
-                result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString());
+                result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString(), params[1].toString());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -280,7 +297,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         protected void onPostExecute(Bitmap bitmap) {
 
         }
-    }*/
+    }
 
     //===================================================================================================================================================================================
     //                                                                          METODO LIKE

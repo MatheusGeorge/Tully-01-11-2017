@@ -2,6 +2,8 @@ package com.example.edu.menutb.model.timeline;
 
 import android.graphics.Bitmap;
 
+import com.example.edu.menutb.model.asynchronous.timeline.AvaliacaoEnum;
+
 import java.util.ArrayList;
 
 /**
@@ -25,6 +27,15 @@ public class TimelinePhoto{
     private String level;
     private Bitmap fotoPerfilBitmap;
     private Bitmap fotoTimelineBitmap;
+    private AvaliacaoEnum type;
+
+    public AvaliacaoEnum getType() {
+        return type;
+    }
+
+    public void setType(AvaliacaoEnum type) {
+        this.type = type;
+    }
 
     public Bitmap getFotoPerfilBitmap() {
         return fotoPerfilBitmap;
@@ -76,6 +87,20 @@ public class TimelinePhoto{
         this.experiencia = experiencia;
         this.cidade = cidade;
         this.pais = pais;
+    }
+    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais, AvaliacaoEnum type) {
+        this.photoPerfil = photoPerfil;
+        this.name = name;
+        this.location = location;
+        this.photoTimeline = photoTimeline;
+        this.like = like;
+        this.dislike = dislike;
+        this.date = date;
+        this.id = id;
+        this.experiencia = experiencia;
+        this.cidade = cidade;
+        this.pais = pais;
+        this.type = type;
     }
 
 

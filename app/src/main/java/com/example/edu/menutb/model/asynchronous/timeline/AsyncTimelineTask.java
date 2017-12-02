@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -85,6 +86,9 @@ public class AsyncTimelineTask {
                 String qtdLikes = dados.getString("curtidas");
                 String qtdDislikes = dados.getString("descurtidas");
                 String data = dados.getString("criadoEm");
+                String curtiu = "none";//dados.getJSONObject("avaliacao").getString("curtiu");
+                AvaliacaoEnum type = AvaliacaoEnum.valueOf(curtiu.toUpperCase());
+
                 data = data.substring(0,9);
                 Log.d(null, "data: " +data);
                 String[] date = data.split("-");
@@ -92,7 +96,7 @@ public class AsyncTimelineTask {
                 sb.append(date[2]);
                 sb.append("/" +date[1]);
                 sb.append("/" + date[0]);
-                arrayListTimelinePhoto.add(new TimelinePhoto(photoPerfil, nome, local, photoTimeline, qtdLikes, qtdDislikes, sb.toString(), id, experiencia, cidade, pais));
+                arrayListTimelinePhoto.add(new TimelinePhoto(photoPerfil, nome, local, photoTimeline, qtdLikes, qtdDislikes, sb.toString(), id, experiencia, cidade, pais, type));
             }
         }
         catch (JSONException e){
@@ -101,9 +105,40 @@ public class AsyncTimelineTask {
         return arrayListTimelinePhoto;
     }
 
-    public String evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url){
+    public String evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url, String verbo){
         String response = "";
+        HttpURLConnection connection;
+        try{
+            URL urlConnection = createURL(url);
+            connection = (HttpURLConnection) urlConnection.openConnection();
+            connection.setRequestMethod(verbo.toUpperCase());
+            if (!verbo.toString().equalsIgnoreCase("delete"))
+                connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Authorization", "bearer " + tokenString);
+            connection.connect();
+            if(verbo.toString().equalsIgnoreCase("POST")){
+                JSONObject body = new JSONObject();
+                body.put("tipo", tipo.equals("like")?"Positivo":"Negativo");
+                body.put("usuarioId", idString);
+                body.put("fotoId", idDesafio);
 
+                OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                out.write(body.toString());
+                out.close();
+            } else if(verbo.toString().equalsIgnoreCase("PATCH")){
+                JSONObject body = new JSONObject();
+                body.put("tipo", tipo.equals("like")?"Positivo":"Negativo");
+
+                OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                out.write(body.toString());
+                out.close();
+            }
+
+            int responseHttp = connection.getResponseCode();
+            Log.d(null, "Avaliacao Response: " + responseHttp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return response;
     }
 }
