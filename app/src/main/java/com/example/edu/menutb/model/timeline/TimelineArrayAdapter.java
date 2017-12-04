@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.edu.menutb.R;
 import com.example.edu.menutb.controller.SearchController;
 import com.example.edu.menutb.controller.TimelineController;
-import com.example.edu.menutb.model.asynchronous.timeline.AvaliacaoEnum;
 import com.example.edu.menutb.model.service.CalculateLevel;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
 
@@ -35,10 +34,6 @@ import java.util.ArrayList;
 
 
 public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdapter.ViewHolder> {
-
-    private enum VerboEnum{
-        POST, DELETE, PATCH;
-    }
 
     private String tokenString;
     private String idString;
@@ -133,7 +128,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             @Override
             public void onClick(View v) {
                 showDialogTimeline(timelinePhoto);
-
             }
 
         });
@@ -141,24 +135,24 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timelinePhoto.getType().equals(AvaliacaoEnum.NONE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE.toString(), VerboEnum.POST.toString());
-                else if(timelinePhoto.getType().equals(AvaliacaoEnum.LIKE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.NONE.toString(), VerboEnum.DELETE.toString());
-                else if(timelinePhoto.getType().equals(AvaliacaoEnum.DISLIKE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.LIKE.toString(), VerboEnum.PATCH.toString());
+                if(timelinePhoto.getType().equalsIgnoreCase("none"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("Positivo", "POST");
+                else if(timelinePhoto.getType().equalsIgnoreCase("Positivo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE");
+                else if(timelinePhoto.getType().equalsIgnoreCase("Negativo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("Positivo", "PATCH");
             }
         });
 
         ViewHolder.buttonDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (timelinePhoto.getType().equals(AvaliacaoEnum.NONE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.DISLIKE.toString(), VerboEnum.POST.toString());
-                else if (timelinePhoto.getType().equals(AvaliacaoEnum.DISLIKE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.NONE.toString(), VerboEnum.DELETE.toString());
-                else if (timelinePhoto.getType().equals(AvaliacaoEnum.LIKE))
-                    new EvaluatePhotoTask(timelinePhoto).execute(AvaliacaoEnum.DISLIKE.toString(), VerboEnum.PATCH.toString());
+                if (timelinePhoto.getType().equalsIgnoreCase("none"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("Negativo", "POST");
+                else if (timelinePhoto.getType().equalsIgnoreCase("Negativo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE");
+                else if (timelinePhoto.getType().equalsIgnoreCase("Positivo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("Negativo", "PATCH");
             }
         });
     }
@@ -289,12 +283,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-
+                //timelinePhoto.setType(params[0].toString());
             }
             return result;
         }
 
-        protected void onPostExecute(Bitmap bitmap) {
+        protected void onPostExecute(String response) {
 
         }
     }

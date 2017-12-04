@@ -1,7 +1,6 @@
 package com.example.edu.menutb.controller;
 
 import com.example.edu.menutb.model.asynchronous.timeline.AsyncTimelineTask;
-import com.example.edu.menutb.model.asynchronous.timeline.AvaliacaoEnum;
 import com.example.edu.menutb.model.timeline.TimelinePhoto;
 
 import java.util.ArrayList;

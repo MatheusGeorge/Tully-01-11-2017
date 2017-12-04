@@ -86,10 +86,18 @@ public class AsyncTimelineTask {
                 String qtdLikes = dados.getString("curtidas");
                 String qtdDislikes = dados.getString("descurtidas");
                 String data = dados.getString("criadoEm");
-                String curtiu = "none";//dados.getJSONObject("avaliacao").getString("curtiu");
-                AvaliacaoEnum type = AvaliacaoEnum.valueOf(curtiu.toUpperCase());
-
-                data = data.substring(0,9);
+                String type = "none";
+                try{
+                    JSONObject object = dados.getJSONObject("avaliacao");
+                    if(object != null) {
+                        type = object.getString("tipo");
+                    } else {
+                        type = "none";
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                data = data.substring(0,10);
                 Log.d(null, "data: " +data);
                 String[] date = data.split("-");
                 StringBuilder sb = new StringBuilder();
@@ -109,25 +117,35 @@ public class AsyncTimelineTask {
         String response = "";
         HttpURLConnection connection;
         try{
-            URL urlConnection = createURL(url);
+            URL urlConnection = new URL(url.toString());
+            Log.d(null, "Avaliacao URL: " + url);
+
             connection = (HttpURLConnection) urlConnection.openConnection();
             connection.setRequestMethod(verbo.toUpperCase());
-            if (!verbo.toString().equalsIgnoreCase("delete"))
-                connection.setRequestProperty("Content-Type", "application/json");
+
             connection.setRequestProperty("Authorization", "bearer " + tokenString);
+            if (!verbo.toString().equalsIgnoreCase("delete")){
+                Log.d(null, "diferente de delete");
+                connection.setRequestProperty("Content-Type", "application/json");
+            }
             connection.connect();
+
+            JSONObject body = new JSONObject();
+
             if(verbo.toString().equalsIgnoreCase("POST")){
-                JSONObject body = new JSONObject();
-                body.put("tipo", tipo.equals("like")?"Positivo":"Negativo");
+                Log.d(null, "evaluatePhotoTimline: Entrou no post");
+
+                body.put("tipo", tipo);
                 body.put("usuarioId", idString);
                 body.put("fotoId", idDesafio);
 
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                 out.write(body.toString());
+                Log.d(null, "BODY: "+body.toString());
                 out.close();
             } else if(verbo.toString().equalsIgnoreCase("PATCH")){
-                JSONObject body = new JSONObject();
-                body.put("tipo", tipo.equals("like")?"Positivo":"Negativo");
+                Log.d(null, "evaluatePhotoTimline: Entrou no patch");
+                body.put("tipo", tipo);
 
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                 out.write(body.toString());

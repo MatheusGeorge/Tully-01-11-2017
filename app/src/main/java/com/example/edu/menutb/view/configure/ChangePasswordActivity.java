@@ -49,10 +49,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration_change_password);
         oldPassword = (EditText) findViewById(R.id.oldPasswordEditText);
-        newPassword = (EditText) findViewById(R.id.newPasswordEditText);
+        newPassword = (EditText) findViewById(R.id.newPasswordEditTextt);
         changeLinearLayout = findViewById(R.id.changeLinearLayout);
         extras = getIntent().getExtras();
-        confirmNewPassword = (EditText) findViewById(R.id.confirmPasswordEditText);
+        confirmNewPassword = (EditText) findViewById(R.id.confirmPasswordEditTextt);
         save = (Button) findViewById(R.id.saveButton);
         confirmNewPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
         save.setOnClickListener(new View.OnClickListener() {
