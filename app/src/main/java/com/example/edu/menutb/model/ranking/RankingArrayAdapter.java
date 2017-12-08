@@ -53,6 +53,7 @@ public class RankingArrayAdapter extends RecyclerView.Adapter<RankingArrayAdapte
         public static TextView textViewUserNameRanking;
         public static TextView textViewUserLevelRanking;
         public static TextView textViewUserXP;
+        public static ImageView imageViewTrophyRanking;
         public static Context context;
 
         public ViewHolder(final View itemView) {
@@ -62,6 +63,7 @@ public class RankingArrayAdapter extends RecyclerView.Adapter<RankingArrayAdapte
             imageViewPerfilRanking = (ImageView) itemView.findViewById(R.id.imageViewPerfilRanking);
             textViewUserLevelRanking = (TextView) itemView.findViewById(R.id.textViewUserLevelRanking);
             textViewUserXP = (TextView) itemView.findViewById(R.id.textViewUserXP);
+            imageViewTrophyRanking = (ImageView) itemView.findViewById(R.id.imageViewTrophyRanking);
             context = itemView.getContext();
         }
     }
@@ -78,6 +80,16 @@ public class RankingArrayAdapter extends RecyclerView.Adapter<RankingArrayAdapte
                 new CalculateLevel().calculateLevelToPerfil(userTully.getExperiencia()));
         ViewHolder.textViewUserXP.setText(ViewHolder.context.getString(R.string.profileExperience) +
                 ": "+userTully.getExperiencia());
+
+        if(userTully.getPosicao().equals("1")){
+            ViewHolder.imageViewTrophyRanking.setImageResource(R.drawable.ic_ranking_gold);
+        } else if(userTully.getPosicao().equals("2")){
+            ViewHolder.imageViewTrophyRanking.setImageResource(R.drawable.ic_ranking_silver);
+        }else if(userTully.getPosicao().equals("3")){
+            ViewHolder.imageViewTrophyRanking.setImageResource(R.drawable.ic_ranking_bronze);
+        } else {
+            ViewHolder.imageViewTrophyRanking.setImageResource(android.R.color.transparent);
+        }
 
         if (userTully.getFoto_url().equals(""))
             ViewHolder.imageViewPerfilRanking.setImageResource(R.mipmap.ic_nav_profile); //trocar o drawable

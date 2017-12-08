@@ -90,6 +90,7 @@ public class AsyncTimelineTask {
                 try{
                     JSONObject object = dados.getJSONObject("avaliacao");
                     if(object != null) {
+                        Log.d(null, "objeto nao nulo");
                         type = object.getString("tipo");
                     } else {
                         type = "none";
@@ -113,8 +114,7 @@ public class AsyncTimelineTask {
         return arrayListTimelinePhoto;
     }
 
-    public String evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url, String verbo){
-        String response = "";
+    public TimelinePhoto evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url, String verbo){
         HttpURLConnection connection;
         try{
             URL urlConnection = new URL(url.toString());
@@ -154,9 +154,74 @@ public class AsyncTimelineTask {
 
             int responseHttp = connection.getResponseCode();
             Log.d(null, "Avaliacao Response: " + responseHttp);
+
+            if(responseHttp == 201){
+                StringBuilder builder = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        builder.append(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d(null, "Avaliacao " + builder.toString());
+                return convertJSONToObject(new JSONArray(builder.toString()));
+            } else if (responseHttp == 200) {
+                return new TimelinePhoto(tipo, "DELETE");
+            } else if (responseHttp == 204) {
+                return new TimelinePhoto(tipo, "PATCH");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return response;
+        return null;
     }
+    public TimelinePhoto evaluatePhotoTimline(String tokenString, String tipo, String url, String verbo){
+        HttpURLConnection connection;
+        try{
+            URL urlConnection = new URL(url.toString());
+            Log.d(null, "Avaliacao URL: " + url);
+
+            connection = (HttpURLConnection) urlConnection.openConnection();
+            connection.setRequestMethod(verbo.toUpperCase());
+            connection.setRequestProperty("Authorization", "bearer " + tokenString);
+            connection.connect();
+
+            int responseHttp = connection.getResponseCode();
+            Log.d(null, "Avaliacao Response: " + responseHttp);
+
+            if (responseHttp == 200) {
+                return new TimelinePhoto(tipo, "DELETE");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private TimelinePhoto convertJSONToObject(JSONArray photoJSON){
+
+        ArrayList<TimelinePhoto> arrayListTimelinePhoto = new ArrayList<>();
+
+        try{
+            JSONArray timeline = photoJSON;
+            for (int i = 0; i < timeline.length(); i++){
+                JSONObject dados = timeline.getJSONObject(i);
+                String id = dados.getString("id");
+                String qtdLikes = dados.getJSONObject("foto").getString("curtidas");
+                String qtdDislikes = dados.getJSONObject("foto").getString("descurtidas");;
+                String type = dados.getString("tipo");
+                arrayListTimelinePhoto.add(new TimelinePhoto(id, qtdLikes, qtdDislikes, type));
+            }
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+        return arrayListTimelinePhoto.get(0);
+    }
+
+
 }

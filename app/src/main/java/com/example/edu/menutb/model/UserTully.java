@@ -16,6 +16,16 @@ public class UserTully {
     private String estado;
     private String pais;
     private String foto_url;
+    private String posicao;
+
+
+    public String getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(String posicao) {
+        this.posicao = posicao;
+    }
 
     public UserTully(){
 
@@ -29,6 +39,16 @@ public class UserTully {
         this.experiencia = experiencia;
         this.cidade = cidade;
         this.pais = pais;
+    }
+    public UserTully(String id,String name, String userName, String foto_url, String experiencia, String cidade, String pais, String posicao){
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+        this.foto_url = foto_url;
+        this.experiencia = experiencia;
+        this.cidade = cidade;
+        this.pais = pais;
+        this.posicao = posicao;
     }
 
     public UserTully(String token, String name, String id) {

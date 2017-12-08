@@ -82,14 +82,14 @@ public class AsyncLoadAccomplishedChallenge {
                 String qtdLikes = dados.getString("curtidas");
                 String qtdDislikes = dados.getString("descurtidas");
                 String data = dados.getString("criadoEm");
-                data = data.substring(0,9);
+                data = data.substring(0,10);
                 Log.d(null, "data: " +data);
                 String[] date = data.split("-");
                 StringBuilder sb = new StringBuilder();
                 sb.append(date[2]);
                 sb.append("/" +date[1]);
                 sb.append("/" + date[0]);
-                 arrayListChallenge.add(new UserChallenge(nome, local, sb.toString(), photoPerfil, photoChallenge, qtdLikes, qtdDislikes));
+                arrayListChallenge.add(new UserChallenge(nome, local, sb.toString(), photoPerfil, photoChallenge, qtdLikes, qtdDislikes));
             }
         }
         catch (JSONException e){

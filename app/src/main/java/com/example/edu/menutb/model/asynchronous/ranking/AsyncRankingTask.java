@@ -79,7 +79,7 @@ public class AsyncRankingTask {
                 String experiencia = dados.getString("experiencia");
                 String cidade = dados.getString("cidade");
                 String pais = dados.getString("pais");
-                arrayListUsers.add(new UserTully(id,name, userName, fotoPerfil, experiencia, cidade, pais));
+                arrayListUsers.add(new UserTully(id,name, userName, fotoPerfil, experiencia, cidade, pais, String.valueOf(i+1)));
             }
         } catch (JSONException e) {
             e.printStackTrace();

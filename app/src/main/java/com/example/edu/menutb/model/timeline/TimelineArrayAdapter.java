@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
  */
 
 
-
 public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdapter.ViewHolder> {
 
     private String tokenString;
@@ -43,7 +43,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     //===================================================================================================================================================================================
     //                                                                                  CONSTRUTOR
     //===================================================================================================================================================================================
-    public TimelineArrayAdapter(ArrayList<TimelinePhoto> myPhotos, Context context){
+    public TimelineArrayAdapter(ArrayList<TimelinePhoto> myPhotos, Context context) {
         this.arrayListTimeline = myPhotos;
         this.context = context;
     }
@@ -58,7 +58,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     //===================================================================================================================================================================================
     //                                                                                  VIEW HOLDER
     //===================================================================================================================================================================================
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public static ImageView photoPerfil;
         public static TextView name;
         public static TextView location;
@@ -91,6 +91,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.timeline_top_recycler_view);
         }
     }
+
     //===================================================================================================================================================================================
     //                                                                              ONBIND VIEW HOLDER
     //===================================================================================================================================================================================
@@ -110,11 +111,10 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         else
             new LoadImageTask(ViewHolder.photoTimeline, timelinePhoto).execute(timelinePhoto.getPhotoTimeline(), "timeline");
 
-        if(timelinePhoto.getPhotoPerfil().equals(""))
+        if (timelinePhoto.getPhotoPerfil().equals(""))
             ViewHolder.photoPerfil.setImageResource(R.drawable.ic_menu_ranking); //trocar o drawable
         else
             new LoadImageTask(ViewHolder.photoPerfil, timelinePhoto).execute(timelinePhoto.getPhotoPerfil(), "perfil");
-
 
 
         ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -135,12 +135,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timelinePhoto.getType().equalsIgnoreCase("none"))
+                if (timelinePhoto.getType().equalsIgnoreCase("none"))
                     new EvaluatePhotoTask(timelinePhoto).execute("Positivo", "POST");
-                else if(timelinePhoto.getType().equalsIgnoreCase("Positivo"))
-                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE");
-                else if(timelinePhoto.getType().equalsIgnoreCase("Negativo"))
-                    new EvaluatePhotoTask(timelinePhoto).execute("Positivo", "PATCH");
+                else if (timelinePhoto.getType().equalsIgnoreCase("Positivo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE", "Positivo");
+                else if (timelinePhoto.getType().equalsIgnoreCase("Negativo"))
+                    new EvaluatePhotoTask(timelinePhoto).execute("Positivo", "PATCH", "Negativo");
             }
         });
 
@@ -150,9 +150,9 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                 if (timelinePhoto.getType().equalsIgnoreCase("none"))
                     new EvaluatePhotoTask(timelinePhoto).execute("Negativo", "POST");
                 else if (timelinePhoto.getType().equalsIgnoreCase("Negativo"))
-                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE");
+                    new EvaluatePhotoTask(timelinePhoto).execute("none", "DELETE", "Negativo");
                 else if (timelinePhoto.getType().equalsIgnoreCase("Positivo"))
-                    new EvaluatePhotoTask(timelinePhoto).execute("Negativo", "PATCH");
+                    new EvaluatePhotoTask(timelinePhoto).execute("Negativo", "PATCH", "Positivo");
             }
         });
     }
@@ -160,7 +160,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     public void showDialogTimeline(TimelinePhoto timelinePhoto) {
         final Dialog dialogPhotoTimeline = new Dialog(context);
         dialogPhotoTimeline.setContentView(R.layout.photo_zoom);
-        try{
+        try {
             ImageView photoTimeline = (ImageView) dialogPhotoTimeline.findViewById(R.id.imageViewPhotoZoom);
             photoTimeline.setImageBitmap(timelinePhoto.getFotoTimelineBitmap());
             //new LoadImageTask(photoTimeline).execute(timelinePhoto.getPhotoTimeline());
@@ -172,7 +172,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             name.setText(timelinePhoto.getName());
             TextView local = (TextView) dialogPhotoTimeline.findViewById(R.id.textViewLocation);
             local.setText(timelinePhoto.getLocation());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         dialogPhotoTimeline.show();
@@ -192,10 +192,11 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.timeline_list_item, viewGroup, false);
         return new ViewHolder(v);
     }
+
     //===================================================================================================================================================================================
     //                                                                              ASYNC TASK
     //===================================================================================================================================================================================
-    private class LoadImageTask extends AsyncTask<String,Void,Bitmap> {
+    private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         private ImageView imageView;
         private TimelinePhoto timelinePhoto;
 
@@ -215,7 +216,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                 connection = (HttpURLConnection) url.openConnection();
                 try (InputStream inputStream = connection.getInputStream()) {
                     bitmap = BitmapFactory.decodeStream(inputStream);
-                    if(params[1].equals("timeline"))
+                    if (params[1].equals("timeline"))
                         timelinePhoto.setFotoTimelineBitmap(bitmap);
                     else
                         timelinePhoto.setFotoPerfilBitmap(bitmap);
@@ -237,18 +238,18 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         }
     }
 
-    private class goToProfile extends AsyncTask<String, Void, String>{
+    private class goToProfile extends AsyncTask<String, Void, String> {
         private TimelinePhoto timeLinePhoto;
 
-        public goToProfile(TimelinePhoto timeLinePhoto){
+        public goToProfile(TimelinePhoto timeLinePhoto) {
             this.timeLinePhoto = timeLinePhoto;
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            try{
+            try {
                 return new SearchController().isFollow(idString, timeLinePhoto.getId(), tokenString);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -259,7 +260,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             Intent intent = new Intent(context, ProfileAnotherActivity.class);
             intent.putExtra("id", timeLinePhoto.getId());
             intent.putExtra("experience", timeLinePhoto.getExperiencia());
-            intent.putExtra("city", timeLinePhoto.getPais() +" - " +timeLinePhoto.getCidade());
+            intent.putExtra("city", timeLinePhoto.getPais() + " - " + timeLinePhoto.getCidade());
             intent.putExtra("url", timeLinePhoto.getPhotoPerfil());
             intent.putExtra("name", timeLinePhoto.getName());
             intent.putExtra("follow", s);
@@ -268,7 +269,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         }
     }
 
-    private class EvaluatePhotoTask extends AsyncTask<String,Void,String> {
+    private class EvaluatePhotoTask extends AsyncTask<String, Void, TimelinePhoto> {
         private TimelinePhoto timelinePhoto;
 
         public EvaluatePhotoTask(TimelinePhoto timelinePhoto) {
@@ -276,19 +277,65 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            String result = "";
+        protected TimelinePhoto doInBackground(String... params) {
+            TimelinePhoto result = null;
             try {
-                result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString(), params[1].toString());
+                if (params[1].toString().equalsIgnoreCase("DELETE")) {
+                    Log.d(null, "doInBackground: " + timelinePhoto.getIdAvaliacao());
+                    result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getIdAvaliacao(), tokenString, params[0].toString(), params[1].toString());
+                } else {
+                    result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString(), params[1].toString());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //timelinePhoto.setType(params[0].toString());
+                if (result != null) {
+                    timelinePhoto.setType(result.getType());
+                    if (params[1].toString().equalsIgnoreCase("DELETE")) {
+                        if (params[2].toString().equalsIgnoreCase("Positivo")) {
+                            int like = Integer.parseInt(timelinePhoto.getLike());
+                            String finallike = String.valueOf(like--);
+                            timelinePhoto.setDislike(finallike);
+                            ViewHolder.like.setText(finallike);
+                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
+                            int dislike = Integer.parseInt(timelinePhoto.getDislike());
+                            String finaldislike = String.valueOf(dislike--);
+                            timelinePhoto.setDislike(finaldislike);
+                            ViewHolder.dislike.setText(finaldislike);
+                        }
+                    } else if (params[1].toString().equalsIgnoreCase("PATCH")) {
+                        if (params[2].toString().equalsIgnoreCase("Positivo")) {
+                            int like = Integer.parseInt(timelinePhoto.getLike());
+                            String finallike = String.valueOf(like--);
+                            timelinePhoto.setDislike(finallike);
+                            ViewHolder.like.setText(finallike);
+                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
+                            int dislike = Integer.parseInt(timelinePhoto.getDislike());
+                            String finaldislike = String.valueOf(dislike--);
+                            timelinePhoto.setDislike(finaldislike);
+                            ViewHolder.dislike.setText(finaldislike);
+                        }
+                    } else if (params[1].toString().equalsIgnoreCase("POST")) {
+                        if (params[0].toString().equalsIgnoreCase("Positivo")) {
+                            timelinePhoto.setIdAvaliacao(result.getIdAvaliacao());
+                            timelinePhoto.setLike(result.getLike());
+                            timelinePhoto.setDislike(result.getDislike());
+                            timelinePhoto.setType(result.getType());
+                            ViewHolder.like.setText(result.getLike());
+                        } else {
+                            timelinePhoto.setIdAvaliacao(result.getIdAvaliacao());
+                            timelinePhoto.setLike(result.getLike());
+                            timelinePhoto.setDislike(result.getDislike());
+                            timelinePhoto.setType(result.getType());
+                            ViewHolder.dislike.setText(result.getDislike());
+                        }
+                    }
+                }
             }
             return result;
         }
 
-        protected void onPostExecute(String response) {
+        protected void onPostExecute(TimelinePhoto response) {
 
         }
     }
@@ -296,18 +343,19 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     //===================================================================================================================================================================================
     //                                                                          METODO LIKE
     //===================================================================================================================================================================================
-    private void like(){
+    private void like() {
         Boolean like = false;
-        if(/*ja curtiu??? ent\E3o descurti*/ like){
+        if (/*ja curtiu??? ent\E3o descurti*/ like) {
 
         } else {
 
         }
     }
+
     //===================================================================================================================================================================================
     //                                                                          METODO COMMENT
     //===================================================================================================================================================================================
-    private void comment(){
+    private void comment() {
         //seila
     }
 }

@@ -3,6 +3,7 @@ package com.example.edu.menutb.view.map;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -84,6 +85,10 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
     private static final int PICK_FROM_GALLERY = 2;
     private static final float ROTATE_FROM = 0.0f;
     private static final float ROTATE_TO = 180.0f;
+
+
+    ProgressDialog dialog;
+
 
     GoogleMap mGoogleMap;
     MapView mMapView;
@@ -732,6 +737,12 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
         protected String doInBackground(String... params) {
             String response = "";
             try {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog = ProgressDialog.show(getContext(), "", getText(R.string.loginAccept), true);
+                    }
+                });
                 response = new ChallengeController().postPhotoToFirebase(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -748,6 +759,7 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
             PathImageTask mPathImage = new PathImageTask(response);
             mPathImage.execute();
             updateExperience(realizado);
+            dialog.dismiss();
             showMessage();
         }
 
@@ -777,6 +789,7 @@ public class ChallengeActivity extends Fragment implements OnMapReadyCallback {
         });
         AlertDialog dialogFinalName = dialogName.create();
         dialogFinalName.show();
+        dialogFinalName.getButton(dialogFinalName.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorBranco));
     }
 
 

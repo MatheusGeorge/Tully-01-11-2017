@@ -26,6 +26,26 @@ public class TimelinePhoto{
     private Bitmap fotoPerfilBitmap;
     private Bitmap fotoTimelineBitmap;
     private String type;
+    private String idAvaliacao;
+
+    public String getIdAvaliacao() {
+        return idAvaliacao;
+    }
+
+    public void setIdAvaliacao(String idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
+    }
+
+    public TimelinePhoto(String type, String verbo){
+        this.type = type;
+    }
+
+    public TimelinePhoto(String idAvaliacao,String type, String like, String dislike) {
+        this.like = like;
+        this.dislike = dislike;
+        this.type = type;
+        this.idAvaliacao = idAvaliacao;
+    }
 
     public String getType() {
         return type;
