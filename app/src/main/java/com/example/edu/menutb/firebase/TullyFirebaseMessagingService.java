@@ -10,10 +10,11 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.edu.menutb.R;
-import com.example.edu.menutb.view.MainActivity;
 import com.example.edu.menutb.view.notification.NotificationAcitivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 /**
  * Created by jeffkenichi on 11/8/17.
@@ -47,16 +48,16 @@ public class TullyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+           /* Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            if (/* Check if data needs to be processed by long running job */ true) {
+            if (*//* Check if data needs to be processed by long running job *//* true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
                 //scheduleJob();
             } else {
                 // Handle message within 10 seconds
                 handleNow();
-            }
-
+            }*/
+            sendNotification(remoteMessage.getData());
         }
 
         // Check if message contains a notification payload.
@@ -93,9 +94,9 @@ public class TullyFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
+     * @param map FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(Map<String, String> map) {
         Intent intent = new Intent(this, NotificationAcitivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -105,15 +106,15 @@ public class TullyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_logo)
-                        .setContentTitle("FCM Message")
-                        .setContentText(messageBody)
+                        .setContentTitle(map.get("title"))
+                        .setContentText(map.get("message"))
                         .setAutoCancel(true)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }

@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,17 @@ import com.example.edu.menutb.view.profile.ProfileActivity;
 import com.example.edu.menutb.view.ranking.RankingActivity;
 import com.example.edu.menutb.view.search.SearchActivity;
 import com.example.edu.menutb.view.timeline.TimelineActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity
@@ -48,6 +60,9 @@ public class MainActivity extends AppCompatActivity
     String lastFragmentTag;
 
     ImageView imageViewProfileMenu;
+
+    String idString;
+    String tokenString;
 
     Context context = this;
 
@@ -64,6 +79,14 @@ public class MainActivity extends AppCompatActivity
         mDbOpenHelper = new TullyOpenHelper(this);
         SharedPreferences idBusca = getSharedPreferences("id", Context.MODE_PRIVATE);
         String resultId = idBusca.getString("id", "");
+
+        idString = resultId;
+        SharedPreferences tokenBuscar = getSharedPreferences("token", Context.MODE_PRIVATE);
+        tokenString = tokenBuscar.getString("token", "");
+
+
+        new AddRefreshedToken().execute(FirebaseInstanceId.getInstance().getToken());
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTully);
         setSupportActionBar(toolbar);
 
@@ -265,6 +288,7 @@ public class MainActivity extends AppCompatActivity
                     SharedPreferences.Editor editorId = idGrava.edit();
                     editorId.clear();
                     editorId.commit();
+                    new CleanRefreshedToken().execute();
                     Intent myIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(myIntent);
                 }
@@ -283,5 +307,105 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private class CleanRefreshedToken extends AsyncTask<String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... strings) {
+            HttpURLConnection connection;
+            try {
+                URL urlConnection = new URL("https://tully-api.herokuapp.com/api/usuarios/" + idString);
+                Log.d(null, "SendRegistrationToServer URL: " + urlConnection);
+
+                connection = (HttpURLConnection) urlConnection.openConnection();
+                connection.setRequestMethod("PATCH");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Authorization", "bearer " + tokenString);
+                connection.connect();
+
+                JSONArray jsonArray = new JSONArray();
+                JSONObject body = new JSONObject();
+                body.put("op", "remove");
+                body.put("path", "/deviceId");
+
+                jsonArray.put(body);
+
+                OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                out.write(jsonArray.toString());
+                out.close();
+
+                int responseHttp = connection.getResponseCode();
+                Log.d(null, "SendRegistrationToServer refreshed token response: " + responseHttp);
+
+                if (responseHttp == 204) {
+
+                }else{
+                    StringBuilder builder = new StringBuilder();
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            builder.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(null, "sendRegistrationToServer: " + builder.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class AddRefreshedToken extends AsyncTask<String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... strings) {
+            HttpURLConnection connection;
+            try {
+                URL urlConnection = new URL("https://tully-api.herokuapp.com/api/usuarios/" + idString);
+                Log.d(null, "SendRegistrationToServer URL: " + urlConnection);
+
+                connection = (HttpURLConnection) urlConnection.openConnection();
+                connection.setRequestMethod("PATCH");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Authorization", "bearer " + tokenString);
+                connection.connect();
+
+                JSONArray jsonArray = new JSONArray();
+                JSONObject body = new JSONObject();
+                body.put("op", "replace");
+                body.put("path", "/deviceId");
+                body.put("value", strings[0]);
+
+                jsonArray.put(body);
+
+                OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                out.write(jsonArray.toString());
+                out.close();
+
+                int responseHttp = connection.getResponseCode();
+                Log.d(null, "SendRegistrationToServer refreshed token response: " + responseHttp);
+
+                if (responseHttp == 204) {
+
+                } else {
+                    StringBuilder builder = new StringBuilder();
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            builder.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(null, "sendRegistrationToServer: " + builder.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
