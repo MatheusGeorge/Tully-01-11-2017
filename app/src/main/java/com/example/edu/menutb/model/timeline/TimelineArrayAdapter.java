@@ -2,6 +2,7 @@ package com.example.edu.menutb.model.timeline;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -39,6 +40,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     private String idString;
     private ArrayList<TimelinePhoto> arrayListTimeline;
     Context context;
+    private final Handler handler;
 
     //===================================================================================================================================================================================
     //                                                                                  CONSTRUTOR
@@ -46,6 +48,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
     public TimelineArrayAdapter(ArrayList<TimelinePhoto> myPhotos, Context context) {
         this.arrayListTimeline = myPhotos;
         this.context = context;
+        this.handler = new Handler(context.getMainLooper());
     }
 
     public TimelineArrayAdapter(ArrayList<TimelinePhoto> myPhotos, Context context, String idString, String tokenString) {
@@ -53,6 +56,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         this.context = context;
         this.idString = idString;
         this.tokenString = tokenString;
+        this.handler = new Handler(context.getMainLooper());
     }
 
     //===================================================================================================================================================================================
@@ -281,10 +285,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
             TimelinePhoto result = null;
             try {
                 if (params[1].toString().equalsIgnoreCase("DELETE")) {
-                    Log.d(null, "doInBackground: " + timelinePhoto.getIdAvaliacao());
+                    Log.d(null, "ID AVALIACAO DELETE: " + timelinePhoto.getIdAvaliacao());
                     result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getIdAvaliacao(), tokenString, params[0].toString(), params[1].toString());
-                } else {
+                } else if (params[1].toString().equalsIgnoreCase("POST")){
                     result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getId(), idString, tokenString, params[0].toString(), params[1].toString());
+                } else {
+                    result = new TimelineController().evaluatePhotoPerfil(timelinePhoto.getIdAvaliacao(), tokenString, params[0].toString(), params[1].toString());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -295,39 +301,79 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                         if (params[2].toString().equalsIgnoreCase("Positivo")) {
                             int like = Integer.parseInt(timelinePhoto.getLike());
                             String finallike = String.valueOf(like--);
-                            timelinePhoto.setDislike(finallike);
-                            ViewHolder.like.setText(finallike);
+                            timelinePhoto.setLike(finallike);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.like.setText(timelinePhoto.getLike());
+                                }
+                            });
                         } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
                             int dislike = Integer.parseInt(timelinePhoto.getDislike());
                             String finaldislike = String.valueOf(dislike--);
                             timelinePhoto.setDislike(finaldislike);
-                            ViewHolder.dislike.setText(finaldislike);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                }
+                            });
                         }
                     } else if (params[1].toString().equalsIgnoreCase("PATCH")) {
                         if (params[2].toString().equalsIgnoreCase("Positivo")) {
                             int like = Integer.parseInt(timelinePhoto.getLike());
-                            String finallike = String.valueOf(like--);
-                            timelinePhoto.setDislike(finallike);
-                            ViewHolder.like.setText(finallike);
-                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
                             int dislike = Integer.parseInt(timelinePhoto.getDislike());
                             String finaldislike = String.valueOf(dislike--);
+                            String finallike = String.valueOf(like++);
                             timelinePhoto.setDislike(finaldislike);
-                            ViewHolder.dislike.setText(finaldislike);
+                            timelinePhoto.setLike(finallike);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.like.setText(timelinePhoto.getLike());
+                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                }
+                            });
+                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
+                            int dislike = Integer.parseInt(timelinePhoto.getDislike());
+                            int like = Integer.parseInt(timelinePhoto.getLike());
+                            String finaldislike = String.valueOf(dislike++);
+                            String finallike = String.valueOf(like--);
+                            timelinePhoto.setDislike(finaldislike);
+                            timelinePhoto.setLike(finallike);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.like.setText(timelinePhoto.getLike());
+                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                }
+                            });
                         }
                     } else if (params[1].toString().equalsIgnoreCase("POST")) {
                         if (params[0].toString().equalsIgnoreCase("Positivo")) {
                             timelinePhoto.setIdAvaliacao(result.getIdAvaliacao());
+                            Log.d(null, "ID avaliacao: " + timelinePhoto.getIdAvaliacao());
                             timelinePhoto.setLike(result.getLike());
                             timelinePhoto.setDislike(result.getDislike());
                             timelinePhoto.setType(result.getType());
-                            ViewHolder.like.setText(result.getLike());
+//                            /*runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    ViewHolder.like.setText(timelinePhoto.getLike());
+//                                }
+//                            });*/
                         } else {
                             timelinePhoto.setIdAvaliacao(result.getIdAvaliacao());
+                            Log.d(null, "ID avaliacao: " + timelinePhoto.getIdAvaliacao());
                             timelinePhoto.setLike(result.getLike());
                             timelinePhoto.setDislike(result.getDislike());
                             timelinePhoto.setType(result.getType());
-                            ViewHolder.dislike.setText(result.getDislike());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                }
+                            });
                         }
                     }
                 }
@@ -338,6 +384,10 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         protected void onPostExecute(TimelinePhoto response) {
 
         }
+    }
+
+    private void runOnUiThread(Runnable r){
+        handler.post(r);
     }
 
     //===================================================================================================================================================================================

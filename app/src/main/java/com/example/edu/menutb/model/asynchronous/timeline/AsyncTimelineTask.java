@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 public class AsyncTimelineTask {
 
-    public ArrayList<TimelinePhoto> getTimeline(String idString, String tokenString){
+    public ArrayList<TimelinePhoto> getTimeline(String idString, String tokenString) {
         ArrayList<TimelinePhoto> timelinePhotoArrayList = new ArrayList<>();
         HttpURLConnection connection;
-        try{
+        try {
             URL url = createURL(idString);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -34,7 +34,7 @@ public class AsyncTimelineTask {
             connection.connect();
 
             int response = connection.getResponseCode();
-            Log.d(null, "Timeline Response: " + response + " token: "+ tokenString);
+            Log.d(null, "Timeline Response: " + response + " token: " + tokenString);
             if (response == HttpURLConnection.HTTP_OK) {
                 StringBuilder builder = new StringBuilder();
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -57,25 +57,24 @@ public class AsyncTimelineTask {
 
     private URL createURL(String idString) {
         try {
-            String urlString = "https://tully-api.herokuapp.com/api/usuarios/"+idString+"/timeline";
+            String urlString = "https://tully-api.herokuapp.com/api/usuarios/" + idString + "/timeline";
             return new URL(urlString);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    private ArrayList<TimelinePhoto> convertJSONToArrayList (JSONArray photoJSON){
+    private ArrayList<TimelinePhoto> convertJSONToArrayList(JSONArray photoJSON) {
 
         ArrayList<TimelinePhoto> arrayListTimelinePhoto = new ArrayList<>();
 
-        try{
+        try {
             JSONArray timeline = photoJSON;
-            for (int i = 0; i < timeline.length(); i++){
+            for (int i = 0; i < timeline.length(); i++) {
                 JSONObject dados = timeline.getJSONObject(i);
-                String id = dados.getJSONObject("usuario").getString("id");
+                String id = dados.getString("id");
                 String nome = dados.getJSONObject("usuario").getString("nome");
                 String experiencia = dados.getJSONObject("usuario").getString("experiencia");
                 String cidade = dados.getJSONObject("usuario").getString("cidade");
@@ -87,36 +86,39 @@ public class AsyncTimelineTask {
                 String qtdDislikes = dados.getString("descurtidas");
                 String data = dados.getString("criadoEm");
                 String type = "none";
-                try{
+                String idAvaliacao = "";
+                try {
                     JSONObject object = dados.getJSONObject("avaliacao");
-                    if(object != null) {
+                    if (object != null) {
                         Log.d(null, "objeto nao nulo");
+                        idAvaliacao = object.getString("id");
                         type = object.getString("tipo");
                     } else {
                         type = "none";
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                data = data.substring(0,10);
-                Log.d(null, "data: " +data);
+                data = data.substring(0, 10);
+                Log.d(null, "data: " + data);
                 String[] date = data.split("-");
                 StringBuilder sb = new StringBuilder();
                 sb.append(date[2]);
-                sb.append("/" +date[1]);
+                sb.append("/" + date[1]);
                 sb.append("/" + date[0]);
-                arrayListTimelinePhoto.add(new TimelinePhoto(photoPerfil, nome, local, photoTimeline, qtdLikes, qtdDislikes, sb.toString(), id, experiencia, cidade, pais, type));
+                arrayListTimelinePhoto.add(new TimelinePhoto(photoPerfil, nome, local,
+                        photoTimeline, qtdLikes, qtdDislikes, sb.toString(), id,
+                        experiencia, cidade, pais, type, idAvaliacao));
             }
-        }
-        catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return arrayListTimelinePhoto;
     }
 
-    public TimelinePhoto evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url, String verbo){
+    public TimelinePhoto evaluatePhotoTimline(String idDesafio, String idString, String tokenString, String tipo, String url, String verbo) {
         HttpURLConnection connection;
-        try{
+        try {
             URL urlConnection = new URL(url.toString());
             Log.d(null, "Avaliacao URL: " + url);
 
@@ -124,7 +126,7 @@ public class AsyncTimelineTask {
             connection.setRequestMethod(verbo.toUpperCase());
 
             connection.setRequestProperty("Authorization", "bearer " + tokenString);
-            if (!verbo.toString().equalsIgnoreCase("delete")){
+            if (!verbo.toString().equalsIgnoreCase("delete")) {
                 Log.d(null, "diferente de delete");
                 connection.setRequestProperty("Content-Type", "application/json");
             }
@@ -132,7 +134,7 @@ public class AsyncTimelineTask {
 
             JSONObject body = new JSONObject();
 
-            if(verbo.toString().equalsIgnoreCase("POST")){
+            if (verbo.toString().equalsIgnoreCase("POST")) {
                 Log.d(null, "evaluatePhotoTimline: Entrou no post");
 
                 body.put("tipo", tipo);
@@ -141,9 +143,9 @@ public class AsyncTimelineTask {
 
                 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                 out.write(body.toString());
-                Log.d(null, "BODY: "+body.toString());
+                Log.d(null, "BODY: " + body.toString());
                 out.close();
-            } else if(verbo.toString().equalsIgnoreCase("PATCH")){
+            } else if (verbo.toString().equalsIgnoreCase("PATCH")) {
                 Log.d(null, "evaluatePhotoTimline: Entrou no patch");
                 body.put("tipo", tipo);
 
@@ -155,7 +157,7 @@ public class AsyncTimelineTask {
             int responseHttp = connection.getResponseCode();
             Log.d(null, "Avaliacao Response: " + responseHttp);
 
-            if(responseHttp == 201){
+            if (responseHttp == 201) {
                 StringBuilder builder = new StringBuilder();
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                     String line;
@@ -166,7 +168,7 @@ public class AsyncTimelineTask {
                     e.printStackTrace();
                 }
                 Log.d(null, "Avaliacao " + builder.toString());
-                return convertJSONToObject(new JSONArray(builder.toString()));
+                return convertJSONToObject(new JSONObject(builder.toString()));
             } else if (responseHttp == 200) {
                 return new TimelinePhoto(tipo, "DELETE");
             } else if (responseHttp == 204) {
@@ -178,22 +180,36 @@ public class AsyncTimelineTask {
         }
         return null;
     }
-    public TimelinePhoto evaluatePhotoTimline(String tokenString, String tipo, String url, String verbo){
+
+    public TimelinePhoto evaluatePhotoTimline(String tokenString, String tipo, String url, String verbo) {
         HttpURLConnection connection;
-        try{
+        try {
             URL urlConnection = new URL(url.toString());
             Log.d(null, "Avaliacao URL: " + url);
 
             connection = (HttpURLConnection) urlConnection.openConnection();
             connection.setRequestMethod(verbo.toUpperCase());
+            if (verbo.equalsIgnoreCase("patch"))
+                connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Authorization", "bearer " + tokenString);
             connection.connect();
+
+            JSONObject body = new JSONObject();
+            if (verbo.equalsIgnoreCase("patch")) {
+                body.put("tipo", tipo);
+
+                OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                out.write(body.toString());
+                out.close();
+            }
 
             int responseHttp = connection.getResponseCode();
             Log.d(null, "Avaliacao Response: " + responseHttp);
 
             if (responseHttp == 200) {
                 return new TimelinePhoto(tipo, "DELETE");
+            } else if (responseHttp == 204) {
+                return new TimelinePhoto(tipo, "PATCH");
             }
 
         } catch (Exception e) {
@@ -202,25 +218,24 @@ public class AsyncTimelineTask {
         return null;
     }
 
-    private TimelinePhoto convertJSONToObject(JSONArray photoJSON){
+    private TimelinePhoto convertJSONToObject(JSONObject photoJSON) {
 
         ArrayList<TimelinePhoto> arrayListTimelinePhoto = new ArrayList<>();
+        TimelinePhoto timelinePhoto = null;
 
-        try{
-            JSONArray timeline = photoJSON;
-            for (int i = 0; i < timeline.length(); i++){
-                JSONObject dados = timeline.getJSONObject(i);
-                String id = dados.getString("id");
-                String qtdLikes = dados.getJSONObject("foto").getString("curtidas");
-                String qtdDislikes = dados.getJSONObject("foto").getString("descurtidas");;
-                String type = dados.getString("tipo");
-                arrayListTimelinePhoto.add(new TimelinePhoto(id, qtdLikes, qtdDislikes, type));
-            }
-        }
-        catch (JSONException e){
+        try {
+            JSONObject dados = photoJSON;
+            String id = dados.getString("id");
+            Log.d(null, "SALVANDO ID: " + id);
+            String qtdLikes = dados.getJSONObject("foto").getString("curtidas");
+            String qtdDislikes = dados.getJSONObject("foto").getString("descurtidas");
+            String type = dados.getString("tipo");
+            timelinePhoto = new TimelinePhoto(id, qtdLikes, qtdDislikes, type);
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        return arrayListTimelinePhoto.get(0);
+        return timelinePhoto;
     }
 
 

@@ -41,7 +41,7 @@ public class TimelineController {
     public TimelinePhoto evaluatePhotoPerfil(String idAvaliacao, String tokenString, String tipo, String verbo){
         StringBuilder url = new StringBuilder();
         url.append("https://tully-api.herokuapp.com/api/avaliacoes/" + idAvaliacao);
-        Log.d(null, "evaluatePhotoPerfil: " + idAvaliacao);
+        Log.d(null, "ID AVALIACAO PARA DELETE: " + idAvaliacao);
 
         TimelinePhoto timelinePhoto = new AsyncTimelineTask().evaluatePhotoTimline(tokenString, tipo, url.toString(), verbo);
 

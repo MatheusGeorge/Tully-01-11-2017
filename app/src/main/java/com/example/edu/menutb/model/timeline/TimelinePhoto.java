@@ -106,7 +106,7 @@ public class TimelinePhoto{
         this.cidade = cidade;
         this.pais = pais;
     }
-    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais, String type) {
+    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais, String type, String idAvaliacao) {
         this.photoPerfil = photoPerfil;
         this.name = name;
         this.location = location;
@@ -119,6 +119,7 @@ public class TimelinePhoto{
         this.cidade = cidade;
         this.pais = pais;
         this.type = type;
+        this.idAvaliacao = idAvaliacao;
     }
 
 
