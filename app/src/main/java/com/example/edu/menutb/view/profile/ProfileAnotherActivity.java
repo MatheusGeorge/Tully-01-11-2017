@@ -15,6 +15,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -167,6 +168,7 @@ public class ProfileAnotherActivity extends AppCompatActivity{
         String experience = bundle.getString("experience");
         String urlProfile = bundle.getString("url");
         id = bundle.getString("id");
+        Log.d(null, "loadBundle: " + bundle.getString("follow"));
         isFollowing = bundle.getString("follow").equals("true")?true:false;
         if(isFollowing)
             imageButtonAddRelation.setImageResource(R.drawable.ic_follow_check);

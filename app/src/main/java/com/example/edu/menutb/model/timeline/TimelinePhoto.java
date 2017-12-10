@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class TimelinePhoto{
 
+    private String idUsuario;
     private String photoPerfil;
     private String name;
     private String location;
@@ -27,6 +28,14 @@ public class TimelinePhoto{
     private Bitmap fotoTimelineBitmap;
     private String type;
     private String idAvaliacao;
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getIdAvaliacao() {
         return idAvaliacao;
@@ -106,7 +115,7 @@ public class TimelinePhoto{
         this.cidade = cidade;
         this.pais = pais;
     }
-    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais, String type, String idAvaliacao) {
+    public TimelinePhoto(String photoPerfil, String name, String location, String photoTimeline, String like, String dislike, String date, String id, String experiencia, String cidade, String pais, String type, String idAvaliacao, String idUsuario) {
         this.photoPerfil = photoPerfil;
         this.name = name;
         this.location = location;
@@ -120,6 +129,7 @@ public class TimelinePhoto{
         this.pais = pais;
         this.type = type;
         this.idAvaliacao = idAvaliacao;
+        this.idUsuario = idUsuario;
     }
 
 

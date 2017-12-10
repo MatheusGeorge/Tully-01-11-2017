@@ -75,6 +75,7 @@ public class AsyncTimelineTask {
             for (int i = 0; i < timeline.length(); i++) {
                 JSONObject dados = timeline.getJSONObject(i);
                 String id = dados.getString("id");
+                String idUsuario = dados.getJSONObject("usuario").getString("id");
                 String nome = dados.getJSONObject("usuario").getString("nome");
                 String experiencia = dados.getJSONObject("usuario").getString("experiencia");
                 String cidade = dados.getJSONObject("usuario").getString("cidade");
@@ -108,7 +109,7 @@ public class AsyncTimelineTask {
                 sb.append("/" + date[0]);
                 arrayListTimelinePhoto.add(new TimelinePhoto(photoPerfil, nome, local,
                         photoTimeline, qtdLikes, qtdDislikes, sb.toString(), id,
-                        experiencia, cidade, pais, type, idAvaliacao));
+                        experiencia, cidade, pais, type, idAvaliacao, idUsuario));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -230,7 +231,7 @@ public class AsyncTimelineTask {
             String qtdLikes = dados.getJSONObject("foto").getString("curtidas");
             String qtdDislikes = dados.getJSONObject("foto").getString("descurtidas");
             String type = dados.getString("tipo");
-            timelinePhoto = new TimelinePhoto(id, qtdLikes, qtdDislikes, type);
+            timelinePhoto = new TimelinePhoto(id, type, qtdLikes, qtdDislikes);
 
         } catch (JSONException e) {
             e.printStackTrace();
