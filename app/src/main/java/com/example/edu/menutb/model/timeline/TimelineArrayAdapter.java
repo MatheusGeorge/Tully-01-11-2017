@@ -108,6 +108,17 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.date.setText(timelinePhoto.getDate());
         ViewHolder.dislike.setText(timelinePhoto.getDislike());
         ViewHolder.like.setText(timelinePhoto.getLike());
+        ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_like);
+        ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_dislike);
+        if(timelinePhoto.getType() != null){
+            if(timelinePhoto.getType().equalsIgnoreCase("Positivo")){
+                ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_liked);
+                ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_dislike);
+            } else if(timelinePhoto.getType().equalsIgnoreCase("Negativo")){
+                ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_like);
+                ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_disliked);
+            }
+        }
         ViewHolder.city.setText(timelinePhoto.getCidade() + " - " + timelinePhoto.getPais());
         ViewHolder.level.setText(ViewHolder.context.getString(R.string.profileLevel) + new CalculateLevel().calculateLevelToPerfil(timelinePhoto.getExperiencia()));
         if (timelinePhoto.getPhotoTimeline().equals(""))
@@ -230,8 +241,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
 
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                connection.disconnect();
             }
 
             return bitmap;
@@ -307,6 +316,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                                 @Override
                                 public void run() {
                                     ViewHolder.like.setText(timelinePhoto.getLike());
+                                    ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_like);
                                 }
                             });
                         } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
@@ -318,6 +328,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                                 @Override
                                 public void run() {
                                     ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                    ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_dislike);
                                 }
                             });
                         }
@@ -325,22 +336,6 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                         if (params[2].toString().equalsIgnoreCase("Positivo")) {
                             int like = Integer.parseInt(timelinePhoto.getLike());
                             int dislike = Integer.parseInt(timelinePhoto.getDislike());
-                            like++;
-                            dislike--;
-                            String finaldislike = String.valueOf(dislike);
-                            String finallike = String.valueOf(like);
-                            timelinePhoto.setDislike(finaldislike);
-                            timelinePhoto.setLike(finallike);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ViewHolder.like.setText(timelinePhoto.getLike());
-                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
-                                }
-                            });
-                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
-                            int dislike = Integer.parseInt(timelinePhoto.getDislike());
-                            int like = Integer.parseInt(timelinePhoto.getLike());
                             like--;
                             dislike++;
                             String finaldislike = String.valueOf(dislike);
@@ -352,6 +347,26 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                                 public void run() {
                                     ViewHolder.like.setText(timelinePhoto.getLike());
                                     ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                    ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_disliked);
+                                    ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_like);
+                                }
+                            });
+                        } else if (params[2].toString().equalsIgnoreCase("Negativo")) {
+                            int dislike = Integer.parseInt(timelinePhoto.getDislike());
+                            int like = Integer.parseInt(timelinePhoto.getLike());
+                            like++;
+                            dislike--;
+                            String finaldislike = String.valueOf(dislike);
+                            String finallike = String.valueOf(like);
+                            timelinePhoto.setDislike(finaldislike);
+                            timelinePhoto.setLike(finallike);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewHolder.like.setText(timelinePhoto.getLike());
+                                    ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                    ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_dislike);
+                                    ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_liked);
                                 }
                             });
                         }
@@ -367,6 +382,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                                 @Override
                                 public void run() {
                                     ViewHolder.like.setText(timelinePhoto.getLike());
+                                    ViewHolder.buttonLike.setImageResource(R.drawable.ic_photo_liked);
                                 }
                             });
                         } else {
@@ -379,6 +395,7 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
                                 @Override
                                 public void run() {
                                     ViewHolder.dislike.setText(timelinePhoto.getDislike());
+                                    ViewHolder.buttonDislike.setImageResource(R.drawable.ic_photo_disliked);
                                 }
                             });
                         }

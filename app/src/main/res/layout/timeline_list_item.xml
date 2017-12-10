@@ -144,7 +144,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="10dp"
                 android:layout_row="0"
-                android:background="@drawable/ic_photo_like" />
+                android:background="@android:color/white" />
         </GridLayout>
 
         <GridLayout
@@ -175,7 +175,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginStart="10dp"
                 android:layout_row="0"
-                android:background="@drawable/ic_photo_dislike" />
+                android:background="@android:color/white" />
         </GridLayout>
 
     </RelativeLayout>
