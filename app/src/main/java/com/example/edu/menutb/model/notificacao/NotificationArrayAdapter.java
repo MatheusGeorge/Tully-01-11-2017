@@ -65,6 +65,12 @@ public class NotificationArrayAdapter extends RecyclerView.Adapter<NotificationA
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Notifications notifications = notificationsArrayList.get(position);
         ViewHolder.textViewUserNameSearch.setText(notifications.getTexto());
+
+        if(notifications.getUrlFotoPerfilUsuario().equals("")){
+           ViewHolder.imageViewNotifications.setImageResource(R.mipmap.ic_nav_profile);
+        } else {
+            new LoadImageTask(ViewHolder.imageViewNotifications).execute(notifications.getUrlFotoPerfilUsuario());
+        }
     }
 
     //===================================================================================================================================================================================
@@ -102,24 +108,22 @@ public class NotificationArrayAdapter extends RecyclerView.Adapter<NotificationA
     //===================================================================================================================================================================================
     //                                                                              ASYNC TASK
     //===================================================================================================================================================================================
-    private class LoadNotificationsTask extends AsyncTask<String,Void,ArrayList<Notifications>> {
+    private class LoadImageTask extends AsyncTask<String,Void,Bitmap> {
         private ImageView imageView;
-
-        public LoadNotificationsTask(ImageView imageView) {
+        public LoadImageTask(ImageView imageView) {
             this.imageView = imageView;
         }
-
         @Override
-        protected ArrayList<Notifications> doInBackground(String... params) {
+        protected Bitmap doInBackground(String... params) {
             try {
-                return new NotificationController().loadNotifications(idString, tokenString);
+                return new ChallengeController().loadPhotoChallenge(params[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-        protected void onPostExecute(ArrayList<Notifications> notificationsArrayList) {
-
+        protected void onPostExecute(Bitmap bitmap) {
+            imageView.setImageBitmap(bitmap);
         }
     }
 

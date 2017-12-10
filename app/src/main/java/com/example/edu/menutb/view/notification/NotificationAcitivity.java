@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.edu.menutb.R;
+import com.example.edu.menutb.controller.NotificationController;
 import com.example.edu.menutb.controller.RankingController;
 import com.example.edu.menutb.model.UserTully;
 import com.example.edu.menutb.model.notificacao.NotificationArrayAdapter;
+import com.example.edu.menutb.model.notificacao.Notifications;
 import com.example.edu.menutb.model.ranking.RankingArrayAdapter;
 import com.example.edu.menutb.view.ranking.RankingActivity;
 
@@ -52,26 +54,25 @@ public class NotificationAcitivity extends Fragment {
     }
 
 
-    private class GetNotifications extends AsyncTask<String, Void, ArrayList<UserTully>> {
-        protected ArrayList<UserTully> doInBackground(String... params) {
-            ArrayList<UserTully> arrayListUserTully = new ArrayList<>();
+    private class GetNotifications extends AsyncTask<String, Void, ArrayList<Notifications>> {
+        @Override
+        protected ArrayList<Notifications> doInBackground(String... params) {
             try {
-                arrayListUserTully = new RankingController().getRanking(tokenString);
+                return new NotificationController().loadNotifications(idString, tokenString);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return arrayListUserTully;
+            return null;
         }
-
         @Override
         protected void onCancelled() {
             getNotifications = null;
             //showProgress(false);
         }
 
-        protected void onPostExecute(ArrayList<UserTully> userTullyArrayList) {
-            if (userTullyArrayList.size() == 0) {
-                Snackbar.make(myView.findViewById(R.id.relativeLayoutNotifications), getString(R.string.noUserFound), Snackbar.LENGTH_LONG)
+        protected void onPostExecute(ArrayList<Notifications> notificationsArrayList) {
+            if (notificationsArrayList.size() == 0) {
+                Snackbar.make(myView.findViewById(R.id.relativeLayoutNotifications), getString(R.string.noNotificationFound), Snackbar.LENGTH_LONG)
                         .setAction(getText(R.string.close), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -80,7 +81,7 @@ public class NotificationAcitivity extends Fragment {
                         }).setActionTextColor(getResources().getColor(android.R.color.white)).show();
                 return;
             } else {
-                notificationArrayAdapter = new NotificationArrayAdapter(userTullyArrayList, getContext(), idString, tokenString);
+                notificationArrayAdapter = new NotificationArrayAdapter(notificationsArrayList, getContext(), idString, tokenString);
                 recyclerView.setAdapter(notificationArrayAdapter);
                 recyclerView.smoothScrollToPosition(0);
             }

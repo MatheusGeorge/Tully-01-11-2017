@@ -132,4 +132,5 @@
     <string name="notificationDislike">Eduardo Diniz de Oliveira (edudiniz) didn\'t liked your challenge \"Praça da Sé\"!</string>
     <string name="rankingLevel">Level:</string>
     <string name="rankingXP">Experience:</string>
+    <string name="noNotificationFound">No new notifications found</string>
 </resources>

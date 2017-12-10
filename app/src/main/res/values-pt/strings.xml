@@ -110,4 +110,5 @@
     <string name="notificationDislike">Eduardo Diniz de Oliveira (edudiniz) não curtiu seu desafio \"Praça da Sé\"!</string>
     <string name="rankingLevel">Nível:</string>
     <string name="rankingXP">Experiência:</string>
+    <string name="noNotificationFound">Nenhuma notificação encontrada</string>
 </resources>
