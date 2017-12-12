@@ -66,11 +66,18 @@ public class NotificationArrayAdapter extends RecyclerView.Adapter<NotificationA
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Notifications notifications = notificationsArrayList.get(position);
         ViewHolder.textViewUserNameSearch.setText(notifications.getTexto());
-
-        if (notifications.getUrlFotoPerfilUsuario().equals("")) {
-            ViewHolder.imageViewNotifications.setImageResource(R.mipmap.ic_nav_profile);
+        if(notifications.getTexto().contains("seguidor")){
+            if (notifications.getUrlFotoPerfilUsuario().equals("")) {
+                ViewHolder.imageViewNotifications.setImageResource(R.mipmap.ic_nav_profile);
+            } else {
+                new LoadImageTask(ViewHolder.imageViewNotifications).execute(notifications.getUrlFotoPerfilUsuario());
+            }
         } else {
-            new LoadImageTask(ViewHolder.imageViewNotifications).execute(notifications.getUrlFotoPerfilUsuario());
+            if (notifications.getUrlFotoTimeline().equals("")) {
+                ViewHolder.imageViewNotifications.setImageResource(R.mipmap.ic_nav_profile);
+            } else {
+                new LoadImageTask(ViewHolder.imageViewNotifications).execute(notifications.getUrlFotoTimeline());
+            }
         }
     }
 
