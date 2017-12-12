@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class AsyncNotificationTask {
 
-
     public ArrayList<Notifications> loadNotifications(String idString, String tokenString){
         ArrayList<Notifications> notificationsArrayList = new ArrayList<>();
         URL url = createURL(idString);
@@ -77,14 +76,25 @@ public class AsyncNotificationTask {
         try {
             for (int i = 0; i < userJSONArray.length(); i++) {
                 JSONObject dados = userJSONArray.getJSONObject(i);
-                String id = dados.getString("id");
-                String name = dados.getString("nome");
-                String userName = dados.getString("userName");
-                String fotoPerfil = dados.getString("fotoPerfil");
-                String experiencia = dados.getString("experiencia");
-                String cidade = dados.getString("cidade");
-                String pais = dados.getString("pais");
-                notificationsArrayList.add(new Notifications());
+                String texto = dados.getString("mensagem");
+                if(texto.contains("seguidor")){
+                    String id = dados.getJSONObject("ator").getString("id");
+                    String name = dados.getJSONObject("ator").getString("nome");
+                    String fotoPerfil = dados.getJSONObject("ator").getString("fotoPerfil");
+                    String experiencia = dados.getJSONObject("ator").getString("experiencia");
+                    String cidade = dados.getJSONObject("ator").getString("cidade");
+                    String pais = dados.getJSONObject("ator").getString("pais");
+                    String cidadePais = cidade + " - " + pais;
+                    notificationsArrayList.add(new Notifications(id, texto, fotoPerfil, name, experiencia, cidadePais));
+                } else {
+                    String fotoPerfil = dados.getJSONObject("usuario").getString("fotoPerfil");
+                    String fotoUrl = dados.getJSONObject("foto").getString("fotoUrl");
+                    String name = dados.getJSONObject("usuario").getString("nome");
+                    String cidade = dados.getJSONObject("usuario").getString("cidade");
+                    String pais = dados.getJSONObject("usuario").getString("pais");
+                    String cidadePais = cidade + " - " + pais;
+                    notificationsArrayList.add(new Notifications(texto, name, cidadePais, fotoUrl, fotoPerfil));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -16,14 +16,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.example.edu.menutb.R;
+import com.example.edu.menutb.controller.ProfileController;
 import com.example.edu.menutb.controller.SearchController;
 import com.example.edu.menutb.controller.TimelineController;
 import com.example.edu.menutb.model.service.CalculateLevel;
+import com.example.edu.menutb.view.profile.ProfileActivity;
 import com.example.edu.menutb.view.profile.ProfileAnotherActivity;
-
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -135,7 +134,12 @@ public class TimelineArrayAdapter extends RecyclerView.Adapter<TimelineArrayAdap
         ViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new goToProfile(arrayListTimeline.get(position)).execute();
+                if(new ProfileController().isSameId(idString, timelinePhoto.getIdUsuario())){
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    new goToProfile(arrayListTimeline.get(position)).execute();
+                }
             }
         });
 
